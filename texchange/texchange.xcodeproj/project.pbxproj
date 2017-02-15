@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		BC6762B61E4BB1A7004C0A95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762B51E4BB1A7004C0A95 /* main.m */; };
 		BC6762B91E4BB1A7004C0A95 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762B81E4BB1A7004C0A95 /* AppDelegate.m */; };
-		BC6762BC1E4BB1A7004C0A95 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762BB1E4BB1A7004C0A95 /* ViewController.m */; };
 		BC6762BF1E4BB1A7004C0A95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC6762BD1E4BB1A7004C0A95 /* Main.storyboard */; };
 		BC6762C11E4BB1A7004C0A95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC6762C01E4BB1A7004C0A95 /* Assets.xcassets */; };
 		BC6762C41E4BB1A7004C0A95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC6762C21E4BB1A7004C0A95 /* LaunchScreen.storyboard */; };
 		BC6762CF1E4BB1A7004C0A95 /* texchangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762CE1E4BB1A7004C0A95 /* texchangeTests.m */; };
 		BC6762DA1E4BB1A7004C0A95 /* texchangeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762D91E4BB1A7004C0A95 /* texchangeUITests.m */; };
+		BC6762EC1E54E82B004C0A95 /* ClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762EB1E54E82B004C0A95 /* ClassViewController.m */; };
+		BC6762EF1E54E83C004C0A95 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762EE1E54E83C004C0A95 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +40,6 @@
 		BC6762B51E4BB1A7004C0A95 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BC6762B71E4BB1A7004C0A95 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BC6762B81E4BB1A7004C0A95 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		BC6762BA1E4BB1A7004C0A95 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BC6762BB1E4BB1A7004C0A95 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		BC6762BE1E4BB1A7004C0A95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BC6762C01E4BB1A7004C0A95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC6762C31E4BB1A7004C0A95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +50,10 @@
 		BC6762D51E4BB1A7004C0A95 /* texchangeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = texchangeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC6762D91E4BB1A7004C0A95 /* texchangeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = texchangeUITests.m; sourceTree = "<group>"; };
 		BC6762DB1E4BB1A7004C0A95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC6762EA1E54E82B004C0A95 /* ClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassViewController.h; sourceTree = "<group>"; };
+		BC6762EB1E54E82B004C0A95 /* ClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassViewController.m; sourceTree = "<group>"; };
+		BC6762ED1E54E83C004C0A95 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		BC6762EE1E54E83C004C0A95 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +106,10 @@
 			children = (
 				BC6762B71E4BB1A7004C0A95 /* AppDelegate.h */,
 				BC6762B81E4BB1A7004C0A95 /* AppDelegate.m */,
-				BC6762BA1E4BB1A7004C0A95 /* ViewController.h */,
-				BC6762BB1E4BB1A7004C0A95 /* ViewController.m */,
+				BC6762EA1E54E82B004C0A95 /* ClassViewController.h */,
+				BC6762EB1E54E82B004C0A95 /* ClassViewController.m */,
+				BC6762ED1E54E83C004C0A95 /* LoginViewController.h */,
+				BC6762EE1E54E83C004C0A95 /* LoginViewController.m */,
 				BC6762BD1E4BB1A7004C0A95 /* Main.storyboard */,
 				BC6762C01E4BB1A7004C0A95 /* Assets.xcassets */,
 				BC6762C21E4BB1A7004C0A95 /* LaunchScreen.storyboard */,
@@ -273,9 +278,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC6762BC1E4BB1A7004C0A95 /* ViewController.m in Sources */,
+				BC6762EF1E54E83C004C0A95 /* LoginViewController.m in Sources */,
 				BC6762B91E4BB1A7004C0A95 /* AppDelegate.m in Sources */,
 				BC6762B61E4BB1A7004C0A95 /* main.m in Sources */,
+				BC6762EC1E54E82B004C0A95 /* ClassViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +513,7 @@
 				BC6762E01E4BB1A7004C0A95 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BC6762E11E4BB1A7004C0A95 /* Build configuration list for PBXNativeTarget "texchangeTests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +522,7 @@
 				BC6762E31E4BB1A7004C0A95 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BC6762E41E4BB1A7004C0A95 /* Build configuration list for PBXNativeTarget "texchangeUITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +531,7 @@
 				BC6762E61E4BB1A7004C0A95 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
