@@ -16,8 +16,6 @@
     UITextField* password;
     UIButton *loginbutton;
     UIActivityIndicatorView *activityIndicator;
-    NSArray *classinfo;
-    NSArray *instructor;
 }
 
 

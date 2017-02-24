@@ -77,7 +77,7 @@
         activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((width/2)-15, 80, 30, 30)];
         [self.view addSubview:activityIndicator];
         [activityIndicator startAnimating];
-        UIWebView *webview=[[UIWebView alloc]initWithFrame:CGRectMake(0, 0, width,height)];
+        UIWebView *webview=[[UIWebView alloc]initWithFrame:CGRectMake(0, 0, 0,0)];
         webview.delegate = self;
         //load sis login webpage
         NSString *url=@"https://sis.rpi.edu/rss/twbkwbis.P_WWWLogin";
@@ -125,11 +125,14 @@ int ifcheck=-1;
         ifcheck=2;
         [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('pagebodydiv')[0].childNodes[3][1].click()"];
     }
+    //handles gathering information when on the students schedule
     else if([page4 isEqual:@"Weekly Student Schedule"] && ifcheck!=3){
         ifcheck=3;
         NSString *cn = [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('datadisplaytable').length"] ;
         int classnum = [cn intValue];
         //runs through each class you have and puts info in classinfo and instructor
+        NSMutableArray *classinfo = [NSMutableArray array];
+        NSMutableArray *instructors = [NSMutableArray array];
         for(int x=0; x<classnum; x=x+2){
             NSString *firstpart = @"document.getElementsByClassName('datadisplaytable')[";
             NSString *secondpart = @"].innerText";
@@ -138,21 +141,75 @@ int ifcheck=-1;
             NSString *class = [webview stringByEvaluatingJavaScriptFromString:fullcommand];
             NSArray *classholder = [class componentsSeparatedByString:@"\n"];
             NSArray *instructorholder = [classholder[4] componentsSeparatedByString:@"\t"];
-            classinfo = [classholder[0] componentsSeparatedByString:@" - "];
-            instructor = [instructorholder[1] componentsSeparatedByString:@" "];
-            [activityIndicator stopAnimating];
-            //got the information, move to next view controller
-            ClassViewController *cvc = [[ClassViewController alloc] init];
-            cvc.classinfocopy = classinfo;
-            cvc.instructorcopy = instructor;
-            [self presentModalViewController:cvc animated:true];
-
-             
-            
-
+            NSArray *classholder2 =[classholder[0] componentsSeparatedByString:@" - "];
+            NSArray *instructorholder2 = [instructorholder[1] componentsSeparatedByString:@" "];
+            //all info is now in somewhat of an organized order in these two data structures
+            [classinfo addObject:classholder2];
+            [instructors addObject:instructorholder2];
         }
+        //removes middle names of instructors because everyone doesnr have a middle name and this simplifies it
+        for(int x=0; x<[instructors count];x++){
+            for(int y=0; y<[instructors[x] count];y++){
+                NSString *holder = instructors[x][y];
+                if ([holder containsString:@"."]) {
+                    [instructors[x] removeObjectAtIndex:y];
+                    y=y-1;
+                }
+
+            }
+        }
+        //creates data structures to be passed to the view controller
+        NSMutableArray *classes = [NSMutableArray array];
+        NSMutableArray *classid = [NSMutableArray array];
+        NSMutableArray *sections = [NSMutableArray array];
+        NSMutableArray *instructor = [NSMutableArray array];
+        for(int x=0; x<[classinfo count]; x++){
+            int classcounter = [classinfo[x] count];
+            int instructorcounter = [instructors[x] count];
+            //some classes are 4 long . ie rcos-texchange-classid-section, fixes repeats
+            [classes addObject:classinfo[x][classcounter-3]];
+            [classid addObject:classinfo[x][classcounter-2]];
+            [sections addObject:classinfo[x][classcounter-1]];
+            //accounts for multiple instructors, up to 3
+            if (instructorcounter==0){
+                [instructor addObject:@""];
+            }
+            else if(instructorcounter/2==1){
+                [instructor addObject:instructors[x][1]];
+
+            }
+            else if(instructorcounter/2==2){
+                NSString *removecomma = [instructors[x][1] substringToIndex:[instructors[x][1] length]-1];
+                NSString *holder1 = [removecomma stringByAppendingString:@" - "];
+                NSString *holder2 =[holder1 stringByAppendingString:instructors[x][3]];
+                [instructor addObject:holder2];
+                
+            }
+            else{
+                NSString *removecomma = [instructors[x][1] substringToIndex:[instructors[x][1] length]-1];
+                NSString *removecomma2 = [instructors[x][3] substringToIndex:[instructors[x][3] length]-1];
+                NSString *holder1 = [removecomma stringByAppendingString:@" - "];
+                NSString *holder2 =[holder1 stringByAppendingString:removecomma2];
+                NSString *holder3 =[holder2 stringByAppendingString:@" - "];
+                NSString *holder4 =[holder3 stringByAppendingString:instructors[x][5]];
+                [instructor addObject:holder4];
+                
+            }
+        
+        }
+        //stops animating the loader, moves all information to the next viewcontroller and segues
+        [activityIndicator stopAnimating];
+        //got the information, move to next view controller
+        ClassViewController *cvc = [[ClassViewController alloc] init];
+        cvc.classes = classes;
+        cvc.classid = classid;
+        cvc.sections = sections;
+        cvc.instructor = instructor;
+        [self presentModalViewController:cvc animated:true];
+
         
     }
+    //checks to see if username and password is valid, if not throws an error and asks you to try again
     else if(errorcheck==7 && ifcheck!=4){
         ifcheck=4;
         [activityIndicator stopAnimating];
@@ -167,6 +224,7 @@ int ifcheck=-1;
 
         
     }
+    //everything is correct and log the user in when on the login screen
     else if(errorcheck==5 && ifcheck!=5){
         ifcheck=5;
         NSString *user = [NSString stringWithFormat:@"%@%@%@", @"document.getElementById('UserID').value = '", username.text,@"'"];

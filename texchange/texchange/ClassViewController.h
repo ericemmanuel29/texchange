@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ClassViewController : UIViewController
+@interface ClassViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSArray *classinfocopy;
-@property (nonatomic, strong) NSArray *instructorcopy;
+@property (nonatomic, strong) NSMutableArray *classes;
+@property (nonatomic, strong) NSMutableArray *classid;
+@property (nonatomic, strong) NSMutableArray *sections;
+@property (nonatomic, strong) NSMutableArray *instructor;
+@property (nonatomic, strong) NSMutableArray *scheduledisplay;
 
 
 @end
