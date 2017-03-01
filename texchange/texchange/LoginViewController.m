@@ -221,7 +221,7 @@ int ifcheck=-1;
     else if(errorcheck==7 && ifcheck!=4){
         ifcheck=4;
         [activityIndicator stopAnimating];
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Authorization Failure" message:@"Invalid User ID or PIN" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Authorization Failure" message:@"Invalid User ID or PIN\nIf the information is correct, check SIS on a web broswer" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             username.text=@"";
             password.text=@"";

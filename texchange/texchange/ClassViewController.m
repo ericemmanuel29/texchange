@@ -50,9 +50,34 @@
     UILabel *displayname = [[UILabel alloc] initWithFrame:nameframe];
     [displayname setTextColor:[UIColor whiteColor]];
     [displayname setText:[NSString stringWithFormat:@"%@", name]];
-    //[displayname setFont:[UIFont systemFontOfSize:12]];
-    //displayname.adjustsFontSizeToFitWidth = YES;
     displayname.textAlignment = NSTextAlignmentCenter;
+    CGFloat spacing = (width-(40*4)-4)/5;
+    CGRect historyframe = CGRectMake(spacing-2, height-65+12, 44, 40);
+    CGRect searchframe = CGRectMake(spacing*2+44, height-65+12, 40, 40);
+    CGRect packageframe = CGRectMake(spacing*3+40*2+4, height-65+12, 40, 40);
+    CGRect messageframe = CGRectMake(spacing*4+40*3+4, height-65+12, 40, 40);
+    UIButton *historybutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *searchbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *packagebutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *messagebutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [historybutton addTarget:self action:@selector(history:) forControlEvents:UIControlEventTouchUpInside];
+    [searchbutton addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+    [packagebutton addTarget:self action:@selector(package:) forControlEvents:UIControlEventTouchUpInside];
+    [messagebutton addTarget:self action:@selector(message:) forControlEvents:UIControlEventTouchUpInside];
+    historybutton.frame = historyframe;
+    searchbutton.frame = searchframe;
+    packagebutton.frame = packageframe;
+    messagebutton.frame = messageframe;
+    UIImage *historyimage = [UIImage imageNamed:@"history.png"];
+    UIImage *searchimage = [UIImage imageNamed:@"search.png"];
+    UIImage *packageimage = [UIImage imageNamed:@"package.png"];
+    UIImage *messageimage = [UIImage imageNamed:@"messages.png"];
+    [historybutton setBackgroundImage:historyimage forState:UIControlStateNormal];
+    [searchbutton setBackgroundImage:searchimage forState:UIControlStateNormal];
+    [packagebutton setBackgroundImage:packageimage forState:UIControlStateNormal];
+    [messagebutton setBackgroundImage:messageimage forState:UIControlStateNormal];
+
+
 
     [self.view addSubview:tableView];
     [self.view addSubview:bottomborder];
@@ -60,6 +85,11 @@
     [self.view addSubview:backpackbutton];
     [self.view addSubview:logoutbutton];
     [self.view addSubview:displayname];
+    [self.view addSubview:historybutton];
+    [self.view addSubview:searchbutton];
+    [self.view addSubview:packagebutton];
+    [self.view addSubview:messagebutton];
+
 
     
 
@@ -71,6 +101,22 @@
 }
 
 - (IBAction)logout:(UIButton *)sender
+{
+    
+}
+- (IBAction)history:(UIButton *)sender
+{
+    
+}
+- (IBAction)search:(UIButton *)sender
+{
+    
+}
+- (IBAction)package:(UIButton *)sender
+{
+    
+}
+- (IBAction)message:(UIButton *)sender
 {
     
 }
