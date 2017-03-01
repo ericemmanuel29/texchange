@@ -1,0 +1,1 @@
+This python script will scrape the RPI bookstore and save every course’s textbook information into a text file. No installs needed - program should work on any machine upon downloading.
