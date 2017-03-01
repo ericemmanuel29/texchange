@@ -115,6 +115,10 @@ int ifcheck=-1;
     //command for each webpage
     if([page1 isEqual:@"Student Menu"] && ifcheck!=0){
         ifcheck=0;
+        NSString *namecommand = @"document.getElementsByClassName('pldefault')[7].innerText";
+        NSString *holder = [webview stringByEvaluatingJavaScriptFromString:namecommand];
+        NSArray *holder2 = [holder componentsSeparatedByString:@", "];
+        name=holder2[1];
         [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('submenulinktext2')[4].click()"];
     }
     else if([page2 isEqual:@"   View Weekly Schedule"] && ifcheck!=1){
@@ -123,6 +127,9 @@ int ifcheck=-1;
     }
     else if([page3 isEqual:@"Select a Semester or Summer Session"] && ifcheck!=2){
         ifcheck=2;
+        //steps one semester back due to the summer 2017 registration
+        [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByName('term_in')[0].selectedIndex = '1'"];
+        //should be removed for final product^^^^^^^
         [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('pagebodydiv')[0].childNodes[3][1].click()"];
     }
     //handles gathering information when on the students schedule
@@ -205,6 +212,7 @@ int ifcheck=-1;
         cvc.classid = classid;
         cvc.sections = sections;
         cvc.instructor = instructor;
+        cvc.name = name;
         [self presentModalViewController:cvc animated:true];
 
         
