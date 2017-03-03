@@ -130,6 +130,7 @@ int ifcheck=-1;
         //steps one semester back due to the summer 2017 registration
         [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByName('term_in')[0].selectedIndex = '1'"];
         //should be removed for final product^^^^^^^
+        registration = [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByName('term_in')[0][0].innerText"] ;
         [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('pagebodydiv')[0].childNodes[3][1].click()"];
     }
     //handles gathering information when on the students schedule
@@ -213,6 +214,7 @@ int ifcheck=-1;
         cvc.sections = sections;
         cvc.instructor = instructor;
         cvc.name = name;
+        cvc.registration = registration;
         [self presentModalViewController:cvc animated:true];
 
         

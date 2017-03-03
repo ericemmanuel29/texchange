@@ -13,7 +13,7 @@
 
 @implementation ClassViewController
 
-@synthesize classes, classid, sections, instructor, name, scheduledisplay;
+@synthesize classes, classid, sections, instructor, name, scheduledisplay, registration;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -78,7 +78,6 @@
     [messagebutton setBackgroundImage:messageimage forState:UIControlStateNormal];
 
 
-
     [self.view addSubview:tableView];
     [self.view addSubview:bottomborder];
     [self.view addSubview:topborder];
@@ -89,6 +88,17 @@
     [self.view addSubview:searchbutton];
     [self.view addSubview:packagebutton];
     [self.view addSubview:messagebutton];
+    
+    if([classes count]==0){
+        UILabel *regi = [[UILabel alloc] initWithFrame:scheduleframe];
+        [regi setTextColor:[UIColor blackColor]];
+        [regi setBackgroundColor:[UIColor whiteColor]];
+        regi.lineBreakMode = NSLineBreakByWordWrapping;
+        regi.numberOfLines = 0;
+        [regi setText:[NSString stringWithFormat:@"You are not registered\nfor any classes in\n%@", registration]];
+        regi.textAlignment = NSTextAlignmentCenter;
+        [self.view addSubview:regi];
+    }
 
 
     

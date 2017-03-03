@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC37229B1E69FA850077853D /* BackpackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC37229A1E69FA850077853D /* BackpackViewController.m */; };
 		BC6762B61E4BB1A7004C0A95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762B51E4BB1A7004C0A95 /* main.m */; };
 		BC6762B91E4BB1A7004C0A95 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762B81E4BB1A7004C0A95 /* AppDelegate.m */; };
 		BC6762BF1E4BB1A7004C0A95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC6762BD1E4BB1A7004C0A95 /* Main.storyboard */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BC3722991E69FA760077853D /* BackpackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackpackViewController.h; sourceTree = "<group>"; };
+		BC37229A1E69FA850077853D /* BackpackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackpackViewController.m; sourceTree = "<group>"; };
 		BC6762B11E4BB1A7004C0A95 /* texchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = texchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC6762B51E4BB1A7004C0A95 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BC6762B71E4BB1A7004C0A95 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -106,6 +109,8 @@
 			children = (
 				BC6762B71E4BB1A7004C0A95 /* AppDelegate.h */,
 				BC6762B81E4BB1A7004C0A95 /* AppDelegate.m */,
+				BC3722991E69FA760077853D /* BackpackViewController.h */,
+				BC37229A1E69FA850077853D /* BackpackViewController.m */,
 				BC6762EA1E54E82B004C0A95 /* ClassViewController.h */,
 				BC6762EB1E54E82B004C0A95 /* ClassViewController.m */,
 				BC6762ED1E54E83C004C0A95 /* LoginViewController.h */,
@@ -280,6 +285,7 @@
 			files = (
 				BC6762EF1E54E83C004C0A95 /* LoginViewController.m in Sources */,
 				BC6762B91E4BB1A7004C0A95 /* AppDelegate.m in Sources */,
+				BC37229B1E69FA850077853D /* BackpackViewController.m in Sources */,
 				BC6762B61E4BB1A7004C0A95 /* main.m in Sources */,
 				BC6762EC1E54E82B004C0A95 /* ClassViewController.m in Sources */,
 			);

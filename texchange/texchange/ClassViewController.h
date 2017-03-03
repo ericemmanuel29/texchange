@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSMutableArray *sections;
 @property (nonatomic, strong) NSMutableArray *instructor;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *registration;
 @property (nonatomic, strong) NSMutableArray *scheduledisplay;
 
 

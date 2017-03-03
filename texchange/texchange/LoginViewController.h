@@ -17,6 +17,7 @@
     UIButton *loginbutton;
     UIActivityIndicatorView *activityIndicator;
     NSString *name;
+    NSString *registration;
 }
 
 
