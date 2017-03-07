@@ -7,6 +7,7 @@
 //
 
 #import "ClassViewController.h"
+#import "BackpackViewController.h"
 
 @interface ClassViewController ()
 @end
@@ -107,6 +108,9 @@
 
 - (IBAction)backpack:(UIButton *)sender
 {
+    BackpackViewController *bvc = [[BackpackViewController alloc] init];
+    [bvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:bvc animated:true completion:nil];
     
 }
 

@@ -42,7 +42,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wi1-gs-Goa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1062" y="124"/>
+            <point key="canvasLocation" x="1001" y="96"/>
+        </scene>
+        <!--Backpack View Controller-->
+        <scene sceneID="cBc-QS-WXw">
+            <objects>
+                <viewController id="FKG-2w-ehE" customClass="BackpackViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5WD-tS-3t9"/>
+                        <viewControllerLayoutGuide type="bottom" id="qQZ-OF-S4V"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="OoH-BU-21a">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pWU-y5-83Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2068" y="96"/>
         </scene>
     </scenes>
 </document>

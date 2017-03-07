@@ -215,7 +215,8 @@ int ifcheck=-1;
         cvc.instructor = instructor;
         cvc.name = name;
         cvc.registration = registration;
-        [self presentModalViewController:cvc animated:true];
+        [cvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+        [self presentViewController:cvc animated:true completion:nil];
 
         
     }
