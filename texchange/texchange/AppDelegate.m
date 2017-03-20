@@ -17,6 +17,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [FIRApp configure];
+        //if no rin set, user has never logged in
+    NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+        if(RIN==NULL){
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            self.window.rootViewController = viewController;
+            [self.window makeKeyAndVisible];
+        }
+        else{
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"ClassViewController"];
+            self.window.rootViewController = viewController;
+            [self.window makeKeyAndVisible];
+    
+        }
     return YES;
 }
 

@@ -8,9 +8,10 @@
 
 #import "LoginViewController.h"
 #import "ClassViewController.h"
+@import Firebase;
 
 @interface LoginViewController ()
-
+@property (strong, nonatomic) FIRDatabaseReference *ref;
 @end
 
 @implementation LoginViewController
@@ -18,6 +19,7 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    self.ref = [[FIRDatabase database] reference];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
     width = [UIScreen mainScreen].bounds.size.width;
     height = [UIScreen mainScreen].bounds.size.height;
@@ -205,16 +207,29 @@ int ifcheck=-1;
             }
         
         }
+        [[NSUserDefaults standardUserDefaults] setObject:username.text forKey:@"RIN"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        //send info to firebase for storage
+        [[[[self.ref child:@"Users"] child:username.text] child:@"name"] setValue:name];
+        [[[[self.ref child:@"Users"] child:username.text] child:@"registration"] setValue:registration];
+        [[[[self.ref child:@"Users"] child:username.text] child:@"classes"] setValue:classes];
+        [[[[self.ref child:@"Users"] child:username.text] child:@"classid"] setValue:classid];
+        [[[[self.ref child:@"Users"] child:username.text] child:@"sections"] setValue:sections];
+        [[[[self.ref child:@"Users"] child:username.text] child:@"instructor"] setValue:instructor];
+        
+        //stops animating the loader, moves all information to the next viewcontroller and segues
+
         //stops animating the loader, moves all information to the next viewcontroller and segues
         [activityIndicator stopAnimating];
         //got the information, move to next view controller
         ClassViewController *cvc = [[ClassViewController alloc] init];
-        cvc.classes = classes;
-        cvc.classid = classid;
-        cvc.sections = sections;
-        cvc.instructor = instructor;
-        cvc.name = name;
-        cvc.registration = registration;
+//        cvc.classes = classes;
+//        cvc.classid = classid;
+//        cvc.sections = sections;
+//        cvc.instructor = instructor;
+//        cvc.name = name;
+//        cvc.registration = registration;
         [cvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:cvc animated:true completion:nil];
 

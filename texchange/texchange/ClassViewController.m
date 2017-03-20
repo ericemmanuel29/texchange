@@ -8,8 +8,10 @@
 
 #import "ClassViewController.h"
 #import "BackpackViewController.h"
+@import Firebase;
 
 @interface ClassViewController ()
+@property (strong, nonatomic) FIRDatabaseReference *ref;
 @end
 
 @implementation ClassViewController
