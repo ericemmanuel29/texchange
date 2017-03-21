@@ -20,6 +20,16 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    //recover user data
+    NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+    classes = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"classes"] mutableCopy];
+    name = [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
+    classid = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"classid"] mutableCopy];
+    sections = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"sections"] mutableCopy];
+    instructor = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"instructor"] mutableCopy];
+    registration = [[NSUserDefaults standardUserDefaults] stringForKey:@"registration"];
+
+
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     //resizes table view to be used later

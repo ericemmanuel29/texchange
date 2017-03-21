@@ -33,7 +33,7 @@
     username.background=[UIImage imageNamed:@"textfield.png"];
     password = [[UITextField alloc] initWithFrame:CGRectMake((width-250)/2,(height/2)-(35/2),250, 35)];
     password.borderStyle =UITextBorderStyleNone;
-    password.placeholder = @"Passoword";
+    password.placeholder = @"Password";
     password.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     password.textAlignment = UITextAlignmentCenter;
     password.background=[UIImage imageNamed:@"textfield.png"];
@@ -130,7 +130,7 @@ int ifcheck=-1;
     else if([page3 isEqual:@"Select a Semester or Summer Session"] && ifcheck!=2){
         ifcheck=2;
         //steps one semester back due to the summer 2017 registration
-        [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByName('term_in')[0].selectedIndex = '1'"];
+        [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByName('term_in')[0].selectedIndex = '2'"];
         //should be removed for final product^^^^^^^
         registration = [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByName('term_in')[0][0].innerText"] ;
         [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('pagebodydiv')[0].childNodes[3][1].click()"];
@@ -208,15 +208,15 @@ int ifcheck=-1;
         
         }
         [[NSUserDefaults standardUserDefaults] setObject:username.text forKey:@"RIN"];
+        [[NSUserDefaults standardUserDefaults] setObject:classes forKey:@"classes"];
+        [[NSUserDefaults standardUserDefaults] setObject:classid forKey:@"classid"];
+        [[NSUserDefaults standardUserDefaults] setObject:sections forKey:@"sections"];
+        [[NSUserDefaults standardUserDefaults] setObject:instructor forKey:@"instructor"];
+        [[NSUserDefaults standardUserDefaults] setObject:name forKey:@"name"];
+        [[NSUserDefaults standardUserDefaults] setObject:registration forKey:@"registration"];
+
+
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        //send info to firebase for storage
-        [[[[self.ref child:@"Users"] child:username.text] child:@"name"] setValue:name];
-        [[[[self.ref child:@"Users"] child:username.text] child:@"registration"] setValue:registration];
-        [[[[self.ref child:@"Users"] child:username.text] child:@"classes"] setValue:classes];
-        [[[[self.ref child:@"Users"] child:username.text] child:@"classid"] setValue:classid];
-        [[[[self.ref child:@"Users"] child:username.text] child:@"sections"] setValue:sections];
-        [[[[self.ref child:@"Users"] child:username.text] child:@"instructor"] setValue:instructor];
         
         //stops animating the loader, moves all information to the next viewcontroller and segues
 
