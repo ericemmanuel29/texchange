@@ -80,5 +80,23 @@
             </objects>
             <point key="canvasLocation" x="2961" y="96"/>
         </scene>
+        <!--Search View Controller-->
+        <scene sceneID="5HO-Pv-rID">
+            <objects>
+                <viewController storyboardIdentifier="SearchViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dKi-xW-j6M" customClass="SearchViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DKk-fu-UEw"/>
+                        <viewControllerLayoutGuide type="bottom" id="uUH-IP-rE4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kft-23-bRv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cGM-xr-CFC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3813.5999999999999" y="93.103448275862078"/>
+        </scene>
     </scenes>
 </document>

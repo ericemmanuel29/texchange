@@ -11,6 +11,7 @@
 		5595F1EEA46BF876CE0AB44F /* libPods-texchangeUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35090CEA87624D2F291D9062 /* libPods-texchangeUITests.a */; };
 		7930B186DDC71602109F7F70 /* libPods-texchange.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1202C2EBCBE76B1E2E681E2 /* libPods-texchange.a */; };
 		AA5DBC5E1E81C74E00A10DD6 /* TextBookInfo.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA5DBC5D1E81C74E00A10DD6 /* TextBookInfo.txt */; };
+		AA5DBC641E81CC7600A10DD6 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5DBC631E81CC7600A10DD6 /* SearchViewController.m */; };
 		BC03EB8A1E734052007AF9AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC03EB891E734052007AF9AA /* Main.storyboard */; };
 		BC37229B1E69FA850077853D /* BackpackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC37229A1E69FA850077853D /* BackpackViewController.m */; };
 		BC37229D1E6F596F0077853D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC37229C1E6F596F0077853D /* GoogleService-Info.plist */; };
@@ -50,6 +51,8 @@
 		6E45E42E89D588C12C2FB958 /* Pods-texchange.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-texchange.release.xcconfig"; path = "Pods/Target Support Files/Pods-texchange/Pods-texchange.release.xcconfig"; sourceTree = "<group>"; };
 		956551DBA2EAAFFB50EB0667 /* Pods-texchangeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-texchangeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-texchangeTests/Pods-texchangeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA5DBC5D1E81C74E00A10DD6 /* TextBookInfo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextBookInfo.txt; sourceTree = "<group>"; };
+		AA5DBC621E81CC7600A10DD6 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		AA5DBC631E81CC7600A10DD6 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		B0C7EFC3A3DFD3C870282AC2 /* Pods-texchange.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-texchange.debug.xcconfig"; path = "Pods/Target Support Files/Pods-texchange/Pods-texchange.debug.xcconfig"; sourceTree = "<group>"; };
 		BC03EB891E734052007AF9AA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BC3722991E69FA760077853D /* BackpackViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackpackViewController.h; sourceTree = "<group>"; };
@@ -151,6 +154,8 @@
 				BC6762EB1E54E82B004C0A95 /* ClassViewController.m */,
 				BC6762ED1E54E83C004C0A95 /* LoginViewController.h */,
 				BC6762EE1E54E83C004C0A95 /* LoginViewController.m */,
+				AA5DBC621E81CC7600A10DD6 /* SearchViewController.h */,
+				AA5DBC631E81CC7600A10DD6 /* SearchViewController.m */,
 				BC03EB891E734052007AF9AA /* Main.storyboard */,
 				BC6762C01E4BB1A7004C0A95 /* Assets.xcassets */,
 				BC6762C21E4BB1A7004C0A95 /* LaunchScreen.storyboard */,
@@ -489,6 +494,7 @@
 				BC37229B1E69FA850077853D /* BackpackViewController.m in Sources */,
 				BC6762B61E4BB1A7004C0A95 /* main.m in Sources */,
 				BC6762EC1E54E82B004C0A95 /* ClassViewController.m in Sources */,
+				AA5DBC641E81CC7600A10DD6 /* SearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

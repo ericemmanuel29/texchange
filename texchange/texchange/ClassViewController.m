@@ -8,6 +8,7 @@
 
 #import "ClassViewController.h"
 #import "BackpackViewController.h"
+#import "SearchViewController.h"
 @import Firebase;
 
 @interface ClassViewController ()
@@ -136,7 +137,9 @@
 }
 - (IBAction)search:(UIButton *)sender
 {
-    
+    SearchViewController *svc = [[SearchViewController alloc] init];
+    [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:svc animated:true completion:nil];
 }
 - (IBAction)package:(UIButton *)sender
 {
