@@ -58,6 +58,9 @@
 
 - (IBAction)back:(UIButton *)sender
 {
+    ClassViewController *cvc = [[ClassViewController alloc] init];
+    [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:cvc animated:true completion:nil];
 
 }
 

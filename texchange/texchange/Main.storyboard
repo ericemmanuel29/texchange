@@ -65,7 +65,7 @@
         <!--Testvc-->
         <scene sceneID="0Bd-lq-xCE">
             <objects>
-                <viewController id="Cdv-Pg-2HF" customClass="testvc" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="testvc" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cdv-Pg-2HF" customClass="testvc" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CUk-OO-zDz"/>
                         <viewControllerLayoutGuide type="bottom" id="rJ3-Su-VPj"/>
