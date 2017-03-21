@@ -37,6 +37,12 @@
     backbutton.frame = CGRectMake(10, 25, 30, 30);
     UIImage *backimage = [UIImage imageNamed:@"backarrow.png"];
     [backbutton setBackgroundImage:backimage forState:UIControlStateNormal];
+    UIButton *addbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addbutton addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
+    addbutton.frame = CGRectMake(width-40, 25, 30, 30);
+    UIImage *addimage = [UIImage imageNamed:@"plus.png"];
+    [addbutton setBackgroundImage:addimage forState:UIControlStateNormal];
+
     CGRect titleframe = CGRectMake(10+27+25, 9, width-10-30-25-10-27-25, 56);
     UILabel *title = [[UILabel alloc] initWithFrame:titleframe];
     [title setTextColor:[UIColor whiteColor]];
@@ -46,6 +52,7 @@
     [self.view addSubview:tableView];
     [self.view addSubview:topborder];
     [self.view addSubview:backbutton];
+    [self.view addSubview:addbutton];
     [self.view addSubview:title];
 }
 
@@ -54,6 +61,10 @@
 
 }
 
+- (IBAction)add:(UIButton *)sender
+{
+    
+}
 //cell height
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*) indexPath
 {
