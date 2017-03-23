@@ -27,7 +27,7 @@
         }
         else{
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"ClassViewController"];
+            UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
             self.window.rootViewController = viewController;
             [self.window makeKeyAndVisible];
     
