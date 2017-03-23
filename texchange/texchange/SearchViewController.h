@@ -20,6 +20,8 @@
 @property (nonatomic, strong) UITextField *textbooktf;
 @property (nonatomic, retain) UIPickerView *pickerView;
 @property (nonatomic, retain) NSMutableArray *dataArray;
+@property (nonatomic, retain) UIToolbar *toolBar;
+
 
 
 

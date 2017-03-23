@@ -15,7 +15,7 @@
 
 @implementation SearchViewController
 
-@synthesize classidbutton, textbooknamebutton, classidsearchbutton, line1view, classidtf, textbooktf, pickerView, dataArray;
+@synthesize classidbutton, textbooknamebutton, classidsearchbutton, line1view, classidtf, textbooktf, pickerView, dataArray, toolBar;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -95,22 +95,23 @@
     [dataArray addObject:@"Five"];
     
     float screenWidth = [UIScreen mainScreen].bounds.size.width;
-    float pickerWidth = screenWidth * 3 / 4;
-    
-    float xPoint = screenWidth / 2 - pickerWidth / 2;
-    
     pickerView = [[UIPickerView alloc] init];
     
     [pickerView setDataSource: self];
     [pickerView setDelegate: self];
-    
-    [pickerView setFrame: CGRectMake(xPoint, 290, pickerWidth, 200.0f)];
+    [pickerView setBackgroundColor:[UIColor whiteColor]];
+    [pickerView setFrame: CGRectMake(0, [UIScreen mainScreen].bounds.size.height+44, screenWidth, 200.0f)];
     
     pickerView.showsSelectionIndicator = YES;
     
     [pickerView selectRow:2 inComponent:0 animated:YES];
+    toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, screenWidth, 44)];
+    toolBar.barStyle = UIStatusBarStyleDefault;
     
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTouched:)];
+    UIBarButtonItem *flexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
 
+    [toolBar setItems:[NSArray arrayWithObjects:flexible, doneButton, nil]];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
@@ -150,6 +151,8 @@
     [classidbutton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [textbooknamebutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    [self.view addSubview:pickerView];
+    [self.view addSubview:toolBar];
     [self.view addSubview:line1view];
     [self.view addSubview:classidsearchbutton];
     [self.view addSubview:classidtf];
@@ -159,7 +162,28 @@
 
 - (IBAction)classidsearchbutton:(UIButton *)sender
 {
-    [self.view addSubview: pickerView];
+
+    CGRect pickerpos = pickerView.frame;
+    CGRect barpos = toolBar.frame;
+    pickerpos.origin.y = [UIScreen mainScreen].bounds.size.height-200.0f;
+    barpos.origin.y = [UIScreen mainScreen].bounds.size.height-200.0f-44;
+    [UIView animateWithDuration:.6
+                     animations:^{
+                         pickerView.frame = pickerpos;
+                         toolBar.frame = barpos;
+                     }];
+}
+- (IBAction)doneTouched:(UIButton *)sender
+{
+    CGRect pickerpos = pickerView.frame;
+    CGRect barpos = toolBar.frame;
+    pickerpos.origin.y = [UIScreen mainScreen].bounds.size.height+44;
+    barpos.origin.y = [UIScreen mainScreen].bounds.size.height;
+    [UIView animateWithDuration:.6
+                     animations:^{
+                         pickerView.frame = pickerpos;
+                         toolBar.frame = barpos;
+                     }];
 }
 
 - (IBAction)textbookname:(UIButton *)sender
@@ -174,6 +198,9 @@
     [self.classidsearchbutton removeFromSuperview];
     [self.classidtf removeFromSuperview];
     [self.pickerView removeFromSuperview];
+    [self.toolBar removeFromSuperview];
+
+
 
 
 }
