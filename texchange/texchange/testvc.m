@@ -12,6 +12,7 @@
 
 @interface testvc ()
 @property (strong, nonatomic) FIRDatabaseReference *ref;
+- (void) abqt;
 @end
 
 @implementation testvc
@@ -32,7 +33,13 @@
     NSLog(@"contents: %@", fileContents);
     
     NSArray *listArray = [fileContents componentsSeparatedByString:@"\n"];
+    NSArray *prefixes = @[@"ADMN", @"ARCH", @"ARTS", @"ASTR", @"BCBP", @"BIOL", @"BMED", @"CHEM", @"CIVL", @"COGS", @"COMM", @"CSCI", @"ECON", @"ECSE", @"ENGR", @"ENVE", @"EPOW", @"ERTH", @"ECSI", @"IENV", @"IHSS", @"ISCI", @"ISYE", @"ITWS", @"LANG", @"LGHT", @"LITR", @"MANE", @"MATH", @"MATP", @"MGMT", @"MTLE", @"PHIL", @"PHYS", @"PSYC", @"STSH", @"USAF", @"USAR", @"USNA", @"WRIT"];
     NSLog(@"items = %lu", (unsigned long)[listArray count]);
+    [self abqt];
+}
+-(void)abqt
+{
+    NSLog(@"hey");
 }
 
 

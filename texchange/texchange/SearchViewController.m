@@ -10,22 +10,25 @@
 #import "ClassViewController.h"
 
 @interface SearchViewController ()
-
+- (void) updatetableview;
+@property (nonatomic, retain) UITableView *tableView;
 @end
 
 @implementation SearchViewController
 
-@synthesize classidbutton, textbooknamebutton, classidsearchbutton, line1view, classidtf, textbooktf, pickerView, dataArray, toolBar;
+@synthesize classidbutton, textbooknamebutton, classidsearchbutton, tablearray, classidtf, textbooktf, pickerView, prefixes, toolBar, tableView;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    tablearray = [NSMutableArray array];
+    self.view.backgroundColor = [UIColor whiteColor];
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     //resizes table view to be used later
     CGRect scheduleframe = [[UIScreen mainScreen] bounds];
-    scheduleframe.origin.y=65;
-    scheduleframe.size.height=scheduleframe.size.height-65;
-    UITableView *tableView = [[UITableView alloc] initWithFrame:scheduleframe style:UITableViewStylePlain];
+    scheduleframe.origin.y=140;
+    scheduleframe.size.height=scheduleframe.size.height-140;
+    tableView = [[UITableView alloc] initWithFrame:scheduleframe style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     [tableView reloadData];
@@ -42,9 +45,7 @@
     UIImage *backimage = [UIImage imageNamed:@"backarrow.png"];
     [backbutton setBackgroundImage:backimage forState:UIControlStateNormal];
     
-    CGRect line1 = CGRectMake((width/2) - 1, 100, 2, 40);
-    line1view = [[UIView alloc] initWithFrame:line1];
-    line1view.backgroundColor = [UIColor grayColor];
+    CGRect line1 = CGRectMake((width/2)-1, 100, 2, 40);
     
     classidbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     [classidbutton addTarget:self action:@selector(classid:) forControlEvents:UIControlEventTouchUpInside];
@@ -54,18 +55,41 @@
     
     classidsearchbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     [classidsearchbutton addTarget:self action:@selector(classidsearchbutton:) forControlEvents:UIControlEventTouchUpInside];
-    classidsearchbutton.frame = CGRectMake(0, 100, (width/2)-1, 40);
-    [classidsearchbutton setBackgroundColor:[UIColor redColor]];
-    [classidsearchbutton setTitle:@"Choose your Class ID" forState:UIControlStateNormal];
+    classidsearchbutton.frame = CGRectMake(0, 100, (width/2)+1, 40);
+    [classidsearchbutton setBackgroundColor:[UIColor whiteColor]];
+    [classidsearchbutton setTitle:@"Choose Class ID" forState:UIControlStateNormal];
+    [classidsearchbutton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [[classidsearchbutton layer] setBorderWidth:2.0f];
+    [[classidsearchbutton layer] setBorderColor:[UIColor lightGrayColor].CGColor];
+    [classidsearchbutton.titleLabel setTextAlignment:UITextAlignmentCenter];
 
+    
     textbooknamebutton = [UIButton buttonWithType:UIButtonTypeCustom];
     [textbooknamebutton addTarget:self action:@selector(textbookname:) forControlEvents:UIControlEventTouchUpInside];
     textbooknamebutton.frame = CGRectMake((width/2)+1, 60, (width/2)-1, 40);
     [textbooknamebutton setBackgroundColor:[UIColor redColor]];
     [textbooknamebutton setTitle:@"Textbook Name" forState:UIControlStateNormal];
     
-    CGRect tv_rect = CGRectMake((width/2)+10, 100, (width/2)+1, 40);
+    CGRect tv_rect = CGRectMake((width/2)-1, 100, (width/2)+1, 40);
     classidtf = [[UITextField alloc]initWithFrame:tv_rect];
+    [[classidtf layer] setBorderWidth:2.0f];
+    [[classidtf layer] setBorderColor:[UIColor lightGrayColor].CGColor];
+    [classidtf setBackgroundColor:[UIColor whiteColor]];
+    classidtf.textAlignment = UITextAlignmentCenter;
+    classidtf.placeholder = @"Enter Class #";
+    classidtf.keyboardType = UIKeyboardTypeNumberPad;
+    classidtf.textColor = [UIColor lightGrayColor];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *notificationCenter2 = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector (handle_TextFieldTextChanged:)
+                               name:UITextFieldTextDidChangeNotification
+                             object:self.classidtf];
+    [notificationCenter addObserver:self
+                           selector:@selector (handle_TextFieldClick:)
+                               name:UITextFieldTextDidBeginEditingNotification
+                             object:self.classidtf];
+
     
     CGRect tv_rect1 = CGRectMake(13, 100, (width/2)+1, 40);
     textbooktf = [[UITextField alloc]initWithFrame:tv_rect1];
@@ -86,13 +110,7 @@
     [self.view addSubview:backbutton];
     [self.view addSubview:title];
     
-    dataArray = [[NSMutableArray alloc] init];
-    
-    [dataArray addObject:@"One"];
-    [dataArray addObject:@"Two"];
-    [dataArray addObject:@"Three"];
-    [dataArray addObject:@"Four"];
-    [dataArray addObject:@"Five"];
+    prefixes = @[@"ADMN", @"ARCH", @"ARTS", @"ASTR", @"BCBP", @"BIOL", @"BMED", @"CHEM", @"CIVL", @"COGS", @"COMM", @"CSCI", @"ECON", @"ECSE", @"ENGR", @"ENVE", @"EPOW", @"ERTH", @"ECSI", @"IENV", @"IHSS", @"ISCI", @"ISYE", @"ITWS", @"LANG", @"LGHT", @"LITR", @"MANE", @"MATH", @"MATP", @"MGMT", @"MTLE", @"PHIL", @"PHYS", @"PSYC", @"STSH", @"USAF", @"USAR", @"USNA", @"WRIT"];
     
     float screenWidth = [UIScreen mainScreen].bounds.size.width;
     pickerView = [[UIPickerView alloc] init];
@@ -104,7 +122,7 @@
     
     pickerView.showsSelectionIndicator = YES;
     
-    [pickerView selectRow:2 inComponent:0 animated:YES];
+    [pickerView selectRow:0 inComponent:0 animated:YES];
     toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, screenWidth, 44)];
     toolBar.barStyle = UIStatusBarStyleDefault;
     
@@ -114,24 +132,73 @@
     [toolBar setItems:[NSArray arrayWithObjects:flexible, doneButton, nil]];
 }
 
+- (void) handle_TextFieldTextChanged:(id)notification {
+    
+    
+    
+    if([classidtf.text length]==4)
+    {
+        [self.view endEditing:YES];
+        [self updatetableview];
+
+    }
+    
+}
+- (void) handle_TextFieldClick:(id)notification {
+    classidtf.text=@"";
+    CGRect pickerpos = pickerView.frame;
+    CGRect barpos = toolBar.frame;
+    pickerpos.origin.y = [UIScreen mainScreen].bounds.size.height+44;
+    barpos.origin.y = [UIScreen mainScreen].bounds.size.height;
+    [UIView animateWithDuration:.05
+                     animations:^{
+                         pickerView.frame = pickerpos;
+                         toolBar.frame = barpos;
+                     }];
+
+    
+}
+
+-(void)updatetableview
+{
+    [tablearray removeAllObjects];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfo" ofType:@"txt"];
+    NSError *error;
+    NSString *fileContents = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
+    if (error)
+        NSLog(@"Error reading file: %@", error.localizedDescription);
+    
+    NSArray *listArray = [fileContents componentsSeparatedByString:@"\n"];
+    for (int x=0;x<[listArray count];x++){
+        NSArray *perclass = [listArray[x] componentsSeparatedByString:@" : "];
+        NSString *pre=classidsearchbutton.currentTitle;
+        NSString *pre2=classidtf.text;
+        if([perclass[0] isEqual:pre] && [perclass[1] isEqual:pre2]){
+            [tablearray addObject:listArray[x]];
+
+        }
+    }
+    [tableView reloadData];
+
+}
+
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
 }
 
 // Total rows in our component.
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return [dataArray count];
+    return [prefixes count];
 }
 
 // Display each row's data.
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return [dataArray objectAtIndex: row];
+    return [prefixes objectAtIndex: row];
 }
 
 // Do something with the selected row.
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    NSLog(@"You selected this: %@", [dataArray objectAtIndex: row]);
-    [classidsearchbutton setTitle:[dataArray objectAtIndex: row] forState:UIControlStateNormal];
+    [classidsearchbutton setTitle:[prefixes objectAtIndex: row] forState:UIControlStateNormal];
     
 }
 
@@ -153,7 +220,6 @@
     
     [self.view addSubview:pickerView];
     [self.view addSubview:toolBar];
-    [self.view addSubview:line1view];
     [self.view addSubview:classidsearchbutton];
     [self.view addSubview:classidtf];
     [self.textbooktf removeFromSuperview];
@@ -162,6 +228,7 @@
 
 - (IBAction)classidsearchbutton:(UIButton *)sender
 {
+    [self.view endEditing:YES];
 
     CGRect pickerpos = pickerView.frame;
     CGRect barpos = toolBar.frame;
@@ -184,6 +251,8 @@
                          pickerView.frame = pickerpos;
                          toolBar.frame = barpos;
                      }];
+    [self updatetableview];
+
 }
 
 - (IBAction)textbookname:(UIButton *)sender
@@ -194,7 +263,6 @@
     [textbooknamebutton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
     [self.view addSubview:textbooktf];
-    [self.line1view removeFromSuperview];
     [self.classidsearchbutton removeFromSuperview];
     [self.classidtf removeFromSuperview];
     [self.pickerView removeFromSuperview];
@@ -208,7 +276,7 @@
 //cell height
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*) indexPath
 {
-    return 100;
+    return 50;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -217,7 +285,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;//[classes count];
+   return [tablearray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -230,15 +298,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     cell.textLabel.numberOfLines = 0;
-    cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+    //cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
     //formats string for view
-    //    NSString *holder1 = [classes[indexPath.row] stringByAppendingString:@"\n"];
-    //    NSString *holder2 =[holder1 stringByAppendingString:classid[indexPath.row]];
-    //    NSString *holder3 =[holder2 stringByAppendingString:@" - "];
-    //    NSString *holder4 =[holder3 stringByAppendingString:sections[indexPath.row]];
-    //    NSString *holder5 =[holder4 stringByAppendingString:@"\n"];
-    //    NSString *holder6 =[holder5 stringByAppendingString:instructor[indexPath.row]];
-    //    cell.textLabel.text = holder6;
+        NSArray *final = [tablearray[indexPath.row] componentsSeparatedByString:@" : "];
+        NSString *holder1 = final[0];
+        NSString *holder2 =[holder1 stringByAppendingString:@" "];
+        NSString *holder3 =[holder2 stringByAppendingString:final[1]];
+        NSString *holder4 =[holder3 stringByAppendingString:@" - "];
+        NSString *holder5 =[holder4 stringByAppendingString:final[2]];
+        cell.textLabel.text = holder5;
     return cell;
 }
 
