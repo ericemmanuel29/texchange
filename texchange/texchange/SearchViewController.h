@@ -21,6 +21,7 @@
 @property (nonatomic, retain) UIPickerView *pickerView;
 @property (nonatomic, retain) NSMutableArray *prefixes;
 @property (nonatomic, retain) UIToolbar *toolBar;
+@property (nonatomic, retain) NSString *cameFrom;
 
 
 

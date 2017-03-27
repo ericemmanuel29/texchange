@@ -138,8 +138,10 @@
 - (IBAction)search:(UIButton *)sender
 {
     SearchViewController *svc = [[SearchViewController alloc] init];
+    svc.cameFrom = @"search";
     [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:svc animated:true completion:nil];
+    
 }
 - (IBAction)package:(UIButton *)sender
 {

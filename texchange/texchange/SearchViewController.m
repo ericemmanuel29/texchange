@@ -16,7 +16,7 @@
 
 @implementation SearchViewController
 
-@synthesize classidbutton, textbooknamebutton, classidsearchbutton, tablearray, classidtf, textbooktf, pickerView, prefixes, toolBar, tableView;
+@synthesize classidbutton, textbooknamebutton, classidsearchbutton, tablearray, classidtf, textbooktf, pickerView, prefixes, toolBar, tableView, cameFrom;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -80,7 +80,6 @@
     classidtf.keyboardType = UIKeyboardTypeNumberPad;
     classidtf.textColor = [UIColor lightGrayColor];
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    NSNotificationCenter *notificationCenter2 = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
                            selector:@selector (handle_TextFieldTextChanged:)
                                name:UITextFieldTextDidChangeNotification
@@ -89,11 +88,19 @@
                            selector:@selector (handle_TextFieldClick:)
                                name:UITextFieldTextDidBeginEditingNotification
                              object:self.classidtf];
+    [notificationCenter addObserver:self
+                           selector:@selector (handle_TextFieldTextChanged:)
+                               name:UITextFieldTextDidChangeNotification
+                             object:self.textbooktf];
 
     
-    CGRect tv_rect1 = CGRectMake(13, 100, (width/2)+1, 40);
+    CGRect tv_rect1 = CGRectMake(0, 100, width, 40);
     textbooktf = [[UITextField alloc]initWithFrame:tv_rect1];
-    
+    [[textbooktf layer] setBorderWidth:2.0f];
+    [[textbooktf layer] setBorderColor:[UIColor lightGrayColor].CGColor];
+    [textbooktf setBackgroundColor:[UIColor whiteColor]];
+    textbooktf.textAlignment = UITextAlignmentCenter;
+    textbooktf.placeholder = @"Enter material name here";
     
     
     CGRect titleframe = CGRectMake(10+27+25, 9, width-10-30-25-10-27-25, 56);
@@ -134,7 +141,10 @@
 
 - (void) handle_TextFieldTextChanged:(id)notification {
     
-    
+    if([textbooktf.text length]>=5)
+    {
+        [self updatematerialtableview];
+    }
     
     if([classidtf.text length]==4)
     {
@@ -162,7 +172,7 @@
 -(void)updatetableview
 {
     [tablearray removeAllObjects];
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfo" ofType:@"txt"];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfoNew" ofType:@"txt"];
     NSError *error;
     NSString *fileContents = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
     if (error)
@@ -180,6 +190,29 @@
     }
     [tableView reloadData];
 
+}
+
+-(void)updatematerialtableview
+{
+    [tablearray removeAllObjects];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfoMaterials" ofType:@"txt"];
+    NSError *error;
+    NSString *fileContents = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
+    if (error)
+        NSLog(@"Error reading file: %@", error.localizedDescription);
+    
+    NSArray *listArray = [fileContents componentsSeparatedByString:@"\n"];
+    for (int x=0; x<[listArray count]; x++)
+    {
+        NSString *noCaps = [listArray[x] lowercaseString];
+        NSString *textbooktfnoCaps = [textbooktf.text lowercaseString];
+        if ([noCaps containsString:textbooktfnoCaps])
+        {
+            NSLog(listArray[x]);
+        }
+    }
+    [tableView reloadData];
+    
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{

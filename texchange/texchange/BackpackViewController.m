@@ -8,6 +8,7 @@
 
 #import "BackpackViewController.h"
 #import "ClassViewController.h"
+#import "SearchViewController.h"
 
 
 @interface BackpackViewController ()
@@ -66,6 +67,10 @@
 
 - (IBAction)add:(UIButton *)sender
 {
+    SearchViewController *svc = [[SearchViewController alloc] init];
+    svc.cameFrom = @"backpack";
+    [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:svc animated:true completion:nil];  
     
 }
 //cell height
