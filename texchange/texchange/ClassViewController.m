@@ -188,5 +188,24 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfoNew" ofType:@"txt"];
+    NSError *error;
+    NSString *fileContents = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
+    if (error)
+        NSLog(@"Error reading file: %@", error.localizedDescription);
+    NSArray *classSplit = [classid[indexPath.row] componentsSeparatedByString:@" "];
+    NSString *materials;
+    NSArray *listArray = [fileContents componentsSeparatedByString:@"\n"];
+    for (int x=0;x<[listArray count];x++){
+        NSArray *perclass = [listArray[x] componentsSeparatedByString:@" : "];
+        if([perclass[0] isEqual:classSplit[0]] && [perclass[1] isEqual:classSplit[1]]){
+            materials=perclass[4];
+            x=[listArray count];
+        }
+    }
+    
+}
 
 @end

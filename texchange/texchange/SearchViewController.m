@@ -343,5 +343,10 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //rowNo = indexPath.row;
+}
+
 
 @end
