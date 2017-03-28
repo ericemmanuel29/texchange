@@ -90,7 +90,7 @@
                                name:UITextFieldTextDidBeginEditingNotification
                              object:self.classidtf];
     [notificationCenter addObserver:self
-                           selector:@selector (handle_TextFieldTextChanged:)
+                           selector:@selector (handle_TextnameTextChanged:)
                                name:UITextFieldTextDidChangeNotification
                              object:self.textbooktf];
 
@@ -142,10 +142,6 @@
 
 - (void) handle_TextFieldTextChanged:(id)notification {
     
-    if([textbooktf.text length]>=5)
-    {
-        [self updatematerialtableview];
-    }
     
     if([classidtf.text length]==4)
     {
@@ -153,6 +149,12 @@
         [self updatetableview];
 
     }
+    
+}
+- (void) handle_TextnameTextChanged:(id)notification {
+    
+        [self updatematerialtableview];
+    
     
 }
 - (void) handle_TextFieldClick:(id)notification {
@@ -210,7 +212,8 @@
         NSString *textbooktfnoCaps = [textbooktf.text lowercaseString];
         if ([noCaps containsString:textbooktfnoCaps])
         {
-            NSLog(listArray[x]);
+            NSString *formatted = listArray[x];
+            [tablearray addObject:formatted];
         }
     }
     [tableView reloadData];
@@ -320,6 +323,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    
    return [tablearray count];
 }
 
@@ -335,6 +339,8 @@
     cell.textLabel.numberOfLines = 0;
     //cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
     //formats string for view
+    if(classidbutton.backgroundColor== [UIColor whiteColor]){
+
         NSArray *final = [tablearray[indexPath.row] componentsSeparatedByString:@" : "];
         NSString *holder1 = final[0];
         NSString *holder2 =[holder1 stringByAppendingString:@" "];
@@ -342,6 +348,10 @@
         NSString *holder4 =[holder3 stringByAppendingString:@" - "];
         NSString *holder5 =[holder4 stringByAppendingString:final[2]];
         cell.textLabel.text = holder5;
+    }
+    else{
+        cell.textLabel.text = tablearray[indexPath.row];
+    }
     return cell;
 }
 
