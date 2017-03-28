@@ -222,6 +222,9 @@ int ifcheck=-1;
 
         //stops animating the loader, moves all information to the next viewcontroller and segues
         [activityIndicator stopAnimating];
+        
+        //send info to firebase for storage
+        [[[[self.ref child:@"Users"] child:username.text] child:@"name"] setValue:name];
         //got the information, move to next view controller
         ClassViewController *cvc = [[ClassViewController alloc] init];
 //        cvc.classes = classes;

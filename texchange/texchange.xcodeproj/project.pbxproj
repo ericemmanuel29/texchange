@@ -25,6 +25,7 @@
 		BC6762DA1E4BB1A7004C0A95 /* texchangeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762D91E4BB1A7004C0A95 /* texchangeUITests.m */; };
 		BC6762EC1E54E82B004C0A95 /* ClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762EB1E54E82B004C0A95 /* ClassViewController.m */; };
 		BC6762EF1E54E83C004C0A95 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6762EE1E54E83C004C0A95 /* LoginViewController.m */; };
+		BCBE35C31E8ABB15001F3205 /* MaterialsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCBE35C21E8ABB15001F3205 /* MaterialsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		BC6762EB1E54E82B004C0A95 /* ClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassViewController.m; sourceTree = "<group>"; };
 		BC6762ED1E54E83C004C0A95 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		BC6762EE1E54E83C004C0A95 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		BCBE35BE1E8ABA7A001F3205 /* MaterialsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialsViewController.h; sourceTree = "<group>"; };
+		BCBE35C21E8ABB15001F3205 /* MaterialsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialsViewController.m; sourceTree = "<group>"; };
 		E1202C2EBCBE76B1E2E681E2 /* libPods-texchange.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-texchange.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3F62C567545B39F072B3F73 /* libPods-texchangeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-texchangeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -148,6 +151,8 @@
 			children = (
 				BC6762B71E4BB1A7004C0A95 /* AppDelegate.h */,
 				BC6762B81E4BB1A7004C0A95 /* AppDelegate.m */,
+				BCBE35BE1E8ABA7A001F3205 /* MaterialsViewController.h */,
+				BCBE35C21E8ABB15001F3205 /* MaterialsViewController.m */,
 				BC3722991E69FA760077853D /* BackpackViewController.h */,
 				BC37229A1E69FA850077853D /* BackpackViewController.m */,
 				BC3722A01E6F5DD70077853D /* testvc.h */,
@@ -497,6 +502,7 @@
 				BC37229F1E6F5DCA0077853D /* testvc.m in Sources */,
 				BC37229B1E69FA850077853D /* BackpackViewController.m in Sources */,
 				BC6762B61E4BB1A7004C0A95 /* main.m in Sources */,
+				BCBE35C31E8ABB15001F3205 /* MaterialsViewController.m in Sources */,
 				BC6762EC1E54E82B004C0A95 /* ClassViewController.m in Sources */,
 				AA5DBC641E81CC7600A10DD6 /* SearchViewController.m in Sources */,
 			);

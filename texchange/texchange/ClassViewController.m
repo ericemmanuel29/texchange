@@ -7,6 +7,7 @@
 //
 
 #import "ClassViewController.h"
+#import "MaterialsViewController.h"
 #import "BackpackViewController.h"
 #import "SearchViewController.h"
 @import Firebase;
@@ -190,7 +191,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfoNew" ofType:@"txt"];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfo" ofType:@"txt"];
     NSError *error;
     NSString *fileContents = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
     if (error)
@@ -205,6 +206,11 @@
             x=[listArray count];
         }
     }
+    MaterialsViewController *mvc = [[MaterialsViewController alloc] init];
+    mvc.material = materials;
+    mvc.camefrom = @"class";
+    [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:mvc animated:true completion:nil];
     
 }
 

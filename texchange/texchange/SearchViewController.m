@@ -8,6 +8,7 @@
 
 #import "SearchViewController.h"
 #import "ClassViewController.h"
+#import "MaterialsViewController.h"
 
 @interface SearchViewController ()
 - (void) updatetableview;
@@ -172,7 +173,7 @@
 -(void)updatetableview
 {
     [tablearray removeAllObjects];
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfoNew" ofType:@"txt"];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfo" ofType:@"txt"];
     NSError *error;
     NSString *fileContents = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
     if (error)
@@ -189,6 +190,7 @@
         }
     }
     [tableView reloadData];
+    
 
 }
 
@@ -345,7 +347,31 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //rowNo = indexPath.row;
+    //only occurs if on left tab class id button
+    if(classidbutton.backgroundColor== [UIColor whiteColor]){
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfo" ofType:@"txt"];
+    NSError *error;
+    NSString *fileContents = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
+    if (error)
+        NSLog(@"Error reading file: %@", error.localizedDescription);
+    NSArray *listArray = [fileContents componentsSeparatedByString:@"\n"];
+    NSString *materials;
+    for (int x=0;x<[listArray count];x++){
+        NSArray *perclass = [listArray[x] componentsSeparatedByString:@" : "];
+        NSString *pre=classidsearchbutton.currentTitle;
+        NSString *pre2=classidtf.text;
+        if([perclass[0] isEqual:pre] && [perclass[1] isEqual:pre2]){
+            materials=perclass[4];
+            x=[listArray count];
+        }
+    }
+    MaterialsViewController *mvc = [[MaterialsViewController alloc] init];
+    mvc.material = materials;
+    mvc.camefrom = @"search";
+    [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:mvc animated:true completion:nil];
+    //doesnt search section, only takes from first class it hits
+    }
 }
 
 
