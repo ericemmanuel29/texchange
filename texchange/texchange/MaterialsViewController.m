@@ -19,7 +19,7 @@
 
 @implementation MaterialsViewController
 
-@synthesize material, materialarray, camefrom;
+@synthesize material, materialarray, camefrom, classTitle;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -52,7 +52,7 @@
     CGRect titleframe = CGRectMake(10+27+25, 9, width-10-30-25-10-27-25, 56);
     UILabel *title = [[UILabel alloc] initWithFrame:titleframe];
     [title setTextColor:[UIColor whiteColor]];
-    [title setText:[NSString stringWithFormat:@"Search"]];
+    [title setText:[NSString stringWithFormat:classTitle]];
     title.textAlignment = NSTextAlignmentCenter;
     
     [self.view addSubview:tableView];

@@ -14,6 +14,6 @@
 @property (nonatomic, strong) NSString *material;
 @property (nonatomic, strong) NSString *camefrom;
 @property (nonatomic, strong) NSArray *materialarray;
-
+@property (nonatomic, strong) NSString *classTitle;
 
 @end
