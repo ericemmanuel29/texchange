@@ -10,6 +10,7 @@
 #import "MaterialsViewController.h"
 #import "BackpackViewController.h"
 #import "SearchViewController.h"
+#import "LoginViewController.h"
 @import Firebase;
 
 @interface ClassViewController ()
@@ -130,6 +131,27 @@
 
 - (IBAction)logout:(UIButton *)sender
 {
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Logout" message:@"Are you sure you want to Logout?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Logout" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        //wipe data and go to login view
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"RIN"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"classes"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"classid"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"sections"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"instructor"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"name"];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"registration"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        LoginViewController *lvc = [[LoginViewController alloc] init];
+        [lvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+        [self presentViewController:lvc animated:true completion:nil];
+        
+    }];
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"Go Back" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    }];
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    [self presentViewController:alert animated:YES completion:nil];
     
 }
 - (IBAction)history:(UIButton *)sender
