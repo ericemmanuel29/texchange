@@ -81,15 +81,17 @@
     classidtf.keyboardType = UIKeyboardTypeNumberPad;
     classidtf.textColor = [UIColor lightGrayColor];
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *notificationCenter1 = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *notificationCenter2 = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
                            selector:@selector (handle_TextFieldTextChanged:)
                                name:UITextFieldTextDidChangeNotification
                              object:self.classidtf];
-    [notificationCenter addObserver:self
+    [notificationCenter1 addObserver:self
                            selector:@selector (handle_TextFieldClick:)
                                name:UITextFieldTextDidBeginEditingNotification
                              object:self.classidtf];
-    [notificationCenter addObserver:self
+    [notificationCenter2 addObserver:self
                            selector:@selector (handle_TextnameTextChanged:)
                                name:UITextFieldTextDidChangeNotification
                              object:self.textbooktf];
@@ -153,8 +155,10 @@
 }
 - (void) handle_TextnameTextChanged:(id)notification {
     
+    if ([textbooktf.text length] >=1)
+    {
         [self updatematerialtableview];
-    
+    }
     
 }
 - (void) handle_TextFieldClick:(id)notification {
@@ -339,7 +343,7 @@
     cell.textLabel.numberOfLines = 0;
     //cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
     //formats string for view
-    if(classidbutton.backgroundColor== [UIColor whiteColor]){
+    if(classidbutton.backgroundColor == [UIColor whiteColor]){
 
         NSArray *final = [tablearray[indexPath.row] componentsSeparatedByString:@" : "];
         NSString *holder1 = final[0];
@@ -366,6 +370,8 @@
         NSLog(@"Error reading file: %@", error.localizedDescription);
     NSArray *listArray = [fileContents componentsSeparatedByString:@"\n"];
     NSString *materials;
+    NSString *classPrefix;
+    NSString *classNumber;
     for (int x=0;x<[listArray count];x++){
         NSArray *perclass = [listArray[x] componentsSeparatedByString:@" : "];
         NSString *pre=classidsearchbutton.currentTitle;
@@ -373,10 +379,13 @@
         if([perclass[0] isEqual:pre] && [perclass[1] isEqual:pre2]){
             materials=perclass[4];
             x=[listArray count];
+            classPrefix = perclass[0];
+            classNumber = perclass[1];
         }
     }
     MaterialsViewController *mvc = [[MaterialsViewController alloc] init];
     mvc.material = materials;
+    mvc.classTitle = [NSString stringWithFormat:@"%@ %@", classPrefix, classNumber];
     mvc.camefrom = @"search";
     [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:mvc animated:true completion:nil];
