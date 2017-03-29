@@ -9,21 +9,20 @@
 
 #import "MaterialsViewController.h"
 #import "ClassViewController.h"
-#import "SearchViewController.h"
 #import "SellingViewController.h"
 #import "BackpackViewController.h"
 //@import Firebase;
 
-@interface MaterialsViewController ()
+@interface SellingViewController ()
 @end
 
-@implementation MaterialsViewController
+@implementation SellingViewController
 
-@synthesize material, materialarray, camefrom;
+//@synthesize material, materialarray, camefrom;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
- 
+    
     self.view.backgroundColor = [UIColor whiteColor];
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
@@ -31,9 +30,6 @@
     CGRect scheduleframe = [[UIScreen mainScreen] bounds];
     scheduleframe.origin.y=60;
     scheduleframe.size.height=scheduleframe.size.height-60;
-    //materials
-    materialarray = [material componentsSeparatedByString:@";"];
-    //materials
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:scheduleframe style:UITableViewStylePlain];
     tableView.delegate = self;
@@ -59,7 +55,7 @@
     [self.view addSubview:topborder];
     [self.view addSubview:backbutton];
     [self.view addSubview:title];
-
+    
 }
 
 
@@ -68,21 +64,21 @@
 
 - (IBAction)back:(UIButton *)sender
 {
-    if([camefrom isEqualToString:@"class"]){
-        ClassViewController *cvc = [[ClassViewController alloc] init];
-        [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-        [self presentViewController:cvc animated:true completion:nil];
-    }
-    if([camefrom isEqualToString:@"search"]){
-        SearchViewController *svc = [[SearchViewController alloc] init];
-        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-        [self presentViewController:svc animated:true completion:nil];
-    }
-    if([camefrom isEqualToString:@"backpack"]){
-        BackpackViewController *bvc = [[BackpackViewController alloc] init];
-        [bvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-        [self presentViewController:bvc animated:true completion:nil];
-    }
+//    if([camefrom isEqualToString:@"class"]){
+//        ClassViewController *cvc = [[ClassViewController alloc] init];
+//        [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+//        [self presentViewController:cvc animated:true completion:nil];
+//    }
+//    if([camefrom isEqualToString:@"search"]){
+//        SearchViewController *svc = [[SearchViewController alloc] init];
+//        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+//        [self presentViewController:svc animated:true completion:nil];
+//    }
+//    if([camefrom isEqualToString:@"backpack"]){
+//        BackpackViewController *bvc = [[BackpackViewController alloc] init];
+//        [bvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+//        [self presentViewController:bvc animated:true completion:nil];
+//    }
 }
 
 
@@ -94,8 +90,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [materialarray count];
-
+    return 0;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -110,44 +106,26 @@
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
     //formats string for view
-
-    cell.textLabel.text = materialarray[indexPath.row];
+    
+    //cell.textLabel.text = materialarray[indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if([camefrom isEqualToString:@"class"]){
-        //go to people selling
-        SellingViewController *svc = [[SellingViewController alloc] init];
-        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-        [self presentViewController:svc animated:true completion:nil];
-    }
-    if([camefrom isEqualToString:@"search"]){
-        //go to people selling
-
-    }
-    if([camefrom isEqualToString:@"backpack"]){
-        //add to backpack
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Add to Backpack?" message:materialarray[indexPath.row] preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-             UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Congratulations" message:@"Material was added to your backpack" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            }];
-            [alert2 addAction:okayButton];
-            [self presentViewController:alert2 animated:YES completion:nil];
-
-        }];
-        UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        }];
-        [alert addAction:yesButton];
-        [alert addAction:noButton];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-
-    }
-    //rowNo = indexPath.row;
+//    
+//    if([camefrom isEqualToString:@"class"]){
+//        //go to people selling
+//    }
+//    if([camefrom isEqualToString:@"search"]){
+//        //go to people selling
+//        
+//    }
+//    if([camefrom isEqualToString:@"backpack"]){
+//        //add to backpack
+//        
+//    }
+//    //rowNo = indexPath.row;
 }
 
 
