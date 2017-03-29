@@ -12,9 +12,11 @@
 #import "SearchViewController.h"
 #import "SellingViewController.h"
 #import "BackpackViewController.h"
-//@import Firebase;
+@import Firebase;
 
 @interface MaterialsViewController ()
+@property (strong, nonatomic) FIRDatabaseReference *ref;
+
 @end
 
 @implementation MaterialsViewController
@@ -23,7 +25,7 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
- 
+    self.ref = [[FIRDatabase database] reference];
     self.view.backgroundColor = [UIColor whiteColor];
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
@@ -52,7 +54,7 @@
     CGRect titleframe = CGRectMake(10+27+25, 9, width-10-30-25-10-27-25, 56);
     UILabel *title = [[UILabel alloc] initWithFrame:titleframe];
     [title setTextColor:[UIColor whiteColor]];
-    [title setText:[NSString stringWithFormat:classTitle]];
+    [title setText:[NSString stringWithFormat:@"%@", classTitle]];
     title.textAlignment = NSTextAlignmentCenter;
     
     [self.view addSubview:tableView];
@@ -132,6 +134,9 @@
         //add to backpack
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Add to Backpack?" message:materialarray[indexPath.row] preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            //add textbook to user profile on firebse
+            NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+            [[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:materialarray[indexPath.row]] setValue:@"NO"];
              UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Congratulations" message:@"Material was added to your backpack" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             }];

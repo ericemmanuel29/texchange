@@ -295,6 +295,7 @@
 				TargetAttributes = {
 					BC6762B01E4BB1A7004C0A95 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = BEFJM9U3V9;
 						ProvisioningStyle = Automatic;
 					};
 					BC6762C91E4BB1A7004C0A95 = {
@@ -652,6 +653,7 @@
 			baseConfigurationReference = B0C7EFC3A3DFD3C870282AC2 /* Pods-texchange.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BEFJM9U3V9;
 				INFOPLIST_FILE = texchange/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rcos.texchange;
@@ -664,6 +666,7 @@
 			baseConfigurationReference = 6E45E42E89D588C12C2FB958 /* Pods-texchange.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BEFJM9U3V9;
 				INFOPLIST_FILE = texchange/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rcos.texchange;

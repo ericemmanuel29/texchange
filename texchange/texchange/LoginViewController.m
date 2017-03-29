@@ -244,12 +244,12 @@ int ifcheck=-1;
         [activityIndicator stopAnimating];
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Authorization Failure" message:@"Invalid User ID or PIN\nIf the information is correct, check SIS on a web broswer" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Try Again" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            username.text=@"";
-            password.text=@"";
             ifcheck=-1;
         }];
         [alert addAction:yesButton];
         [self presentViewController:alert animated:YES completion:nil];
+        username.text=@"";
+        password.text=@"";
 
         
     }

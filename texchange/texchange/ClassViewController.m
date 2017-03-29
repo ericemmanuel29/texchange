@@ -198,17 +198,25 @@
         NSLog(@"Error reading file: %@", error.localizedDescription);
     NSArray *classSplit = [classid[indexPath.row] componentsSeparatedByString:@" "];
     NSString *materials;
+    NSString *cid;
+    NSString *cnum;
     NSArray *listArray = [fileContents componentsSeparatedByString:@"\n"];
     for (int x=0;x<[listArray count];x++){
         NSArray *perclass = [listArray[x] componentsSeparatedByString:@" : "];
         if([perclass[0] isEqual:classSplit[0]] && [perclass[1] isEqual:classSplit[1]]){
             materials=perclass[4];
+            cid=perclass[0];
+            cnum=perclass[1];
             x=[listArray count];
         }
     }
     MaterialsViewController *mvc = [[MaterialsViewController alloc] init];
     mvc.material = materials;
     mvc.camefrom = @"class";
+    NSString *holder1 = cid;
+    NSString *holder2 =[holder1 stringByAppendingString:@" "];
+    NSString *holder3 =[holder2 stringByAppendingString:cnum];
+    mvc.classTitle = holder3;
     [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:mvc animated:true completion:nil];
     

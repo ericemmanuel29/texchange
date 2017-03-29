@@ -385,7 +385,6 @@
     }
     MaterialsViewController *mvc = [[MaterialsViewController alloc] init];
     mvc.material = materials;
-<<<<<<< HEAD
         if([cameFrom isEqualToString:@"backpack"]){
             mvc.camefrom = @"backpack";
 
@@ -394,10 +393,7 @@
             mvc.camefrom = @"search";
             
         }
-=======
     mvc.classTitle = [NSString stringWithFormat:@"%@ %@", classPrefix, classNumber];
-    mvc.camefrom = @"search";
->>>>>>> origin/master
     [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:mvc animated:true completion:nil];
     //doesnt search section, only takes from first class it hits
