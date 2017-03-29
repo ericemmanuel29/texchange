@@ -80,22 +80,6 @@
     classidtf.placeholder = @"Enter Class #";
     classidtf.keyboardType = UIKeyboardTypeNumberPad;
     classidtf.textColor = [UIColor lightGrayColor];
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    NSNotificationCenter *notificationCenter1 = [NSNotificationCenter defaultCenter];
-    NSNotificationCenter *notificationCenter2 = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self
-                           selector:@selector (handle_TextFieldTextChanged:)
-                               name:UITextFieldTextDidChangeNotification
-                             object:self.classidtf];
-    [notificationCenter1 addObserver:self
-                           selector:@selector (handle_TextFieldClick:)
-                               name:UITextFieldTextDidBeginEditingNotification
-                             object:self.classidtf];
-    [notificationCenter2 addObserver:self
-                           selector:@selector (handle_TextnameTextChanged:)
-                               name:UITextFieldTextDidChangeNotification
-                             object:self.textbooktf];
-
     
     CGRect tv_rect1 = CGRectMake(0, 100, width, 40);
     textbooktf = [[UITextField alloc]initWithFrame:tv_rect1];
@@ -105,6 +89,16 @@
     textbooktf.textAlignment = UITextAlignmentCenter;
     textbooktf.placeholder = @"Enter material name here";
     
+    [classidtf addTarget:self
+                  action:@selector(handle_TextFieldClick:)
+        forControlEvents:UIControlEventEditingDidBegin];
+    [classidtf addTarget:self
+                  action:@selector(handle_TextFieldTextChanged:)
+        forControlEvents:UIControlEventEditingChanged];
+    [textbooktf addTarget:self
+                   action:@selector(handle_TextnameTextChanged:)
+         forControlEvents:UIControlEventEditingChanged];
+    
     
     CGRect titleframe = CGRectMake(10+27+25, 9, width-10-30-25-10-27-25, 56);
     UILabel *title = [[UILabel alloc] initWithFrame:titleframe];
@@ -112,7 +106,6 @@
     [title setText:[NSString stringWithFormat:@"Search"]];
     title.textAlignment = NSTextAlignmentCenter;
     
-    [self.view addSubview:tableView];
     [self.view addSubview:topborder];
     [self.view addSubview:lineview];
     [self.view addSubview:classidbutton];
@@ -142,26 +135,29 @@
     [toolBar setItems:[NSArray arrayWithObjects:flexible, doneButton, nil]];
 }
 
-- (void) handle_TextFieldTextChanged:(id)notification {
+-(void)handle_TextFieldTextChanged:(UITextField *)theTextField{
+        if([classidtf.text length]==4)
+        {
+            [self.view addSubview:tableView];
+            [self.view addSubview:pickerView];
+            [self.view addSubview:toolBar];
+            [self.view endEditing:YES];
+            [self updatetableview];
     
-    
-    if([classidtf.text length]==4)
-    {
-        [self.view endEditing:YES];
-        [self updatetableview];
-
-    }
-    
+        }
 }
-- (void) handle_TextnameTextChanged:(id)notification {
-    
+
+-(void)handle_TextnameTextChanged:(UITextField *)theTextField{
     if ([textbooktf.text length] >=1)
     {
+        [self.view addSubview:tableView];
+        [self.view addSubview:pickerView];
+        [self.view addSubview:toolBar];
         [self updatematerialtableview];
     }
-    
 }
-- (void) handle_TextFieldClick:(id)notification {
+
+-(void)handle_TextFieldClick:(UITextField *)theTextField{
     classidtf.text=@"";
     CGRect pickerpos = pickerView.frame;
     CGRect barpos = toolBar.frame;
@@ -172,9 +168,10 @@
                          pickerView.frame = pickerpos;
                          toolBar.frame = barpos;
                      }];
-
     
+
 }
+
 
 -(void)updatetableview
 {
