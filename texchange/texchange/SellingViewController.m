@@ -8,21 +8,26 @@
 
 
 #import "MaterialsViewController.h"
+#import "SearchViewController.h"
 #import "ClassViewController.h"
 #import "SellingViewController.h"
 #import "BackpackViewController.h"
-//@import Firebase;
+@import Firebase;
 
 @interface SellingViewController ()
+- (void) getfirebase;
+@property (strong, nonatomic) FIRDatabaseReference *ref;
 @end
 
 @implementation SellingViewController
 
-//@synthesize material, materialarray, camefrom;
+@synthesize Mtitle, sellers, sellersRIN, tableView, camefrom, classholder, materialarray;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    
+    sellers = [NSMutableArray array];
+    sellersRIN = [NSMutableArray array];
+    [self getfirebase];
     self.view.backgroundColor = [UIColor whiteColor];
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
@@ -31,7 +36,7 @@
     scheduleframe.origin.y=60;
     scheduleframe.size.height=scheduleframe.size.height-60;
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:scheduleframe style:UITableViewStylePlain];
+    tableView = [[UITableView alloc] initWithFrame:scheduleframe style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     [tableView reloadData];
@@ -48,7 +53,8 @@
     CGRect titleframe = CGRectMake(10+27+25, 9, width-10-30-25-10-27-25, 56);
     UILabel *title = [[UILabel alloc] initWithFrame:titleframe];
     [title setTextColor:[UIColor whiteColor]];
-    [title setText:[NSString stringWithFormat:@"Search"]];
+    NSString *changer = [Mtitle stringByReplacingOccurrencesOfString:@"@" withString:@"/"];
+    [title setText:[NSString stringWithFormat:@"%@", changer]];
     title.textAlignment = NSTextAlignmentCenter;
     
     [self.view addSubview:tableView];
@@ -64,50 +70,71 @@
 
 - (IBAction)back:(UIButton *)sender
 {
-//    if([camefrom isEqualToString:@"class"]){
-//        ClassViewController *cvc = [[ClassViewController alloc] init];
-//        [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-//        [self presentViewController:cvc animated:true completion:nil];
-//    }
-//    if([camefrom isEqualToString:@"search"]){
-//        SearchViewController *svc = [[SearchViewController alloc] init];
-//        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-//        [self presentViewController:svc animated:true completion:nil];
-//    }
-//    if([camefrom isEqualToString:@"backpack"]){
-//        BackpackViewController *bvc = [[BackpackViewController alloc] init];
-//        [bvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-//        [self presentViewController:bvc animated:true completion:nil];
-//    }
+    if([camefrom isEqualToString:@"classmaterials"]){
+        MaterialsViewController *mvc = [[MaterialsViewController alloc] init];
+        mvc.camefrom = @"class";
+        mvc.classTitle = classholder;
+        mvc.materialarray=materialarray;
+        [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [self presentViewController:mvc animated:true completion:nil];
+    }
+    if([camefrom isEqualToString:@"searchmaterials"]){
+        MaterialsViewController *mvc = [[MaterialsViewController alloc] init];
+        mvc.camefrom = @"search";
+        mvc.classTitle = classholder;
+        mvc.materialarray=materialarray;
+        [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [self presentViewController:mvc animated:true completion:nil];
+    }
+    if([camefrom isEqualToString:@"search"]){
+        SearchViewController *svc = [[SearchViewController alloc] init];
+        svc.cameFrom=@"search";
+        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [self presentViewController:svc animated:true completion:nil];
+    }
 }
 
 
 //cell height
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*) indexPath
 {
-    return 75;
+    return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return [sellers count];
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *simpleTableIdentifier = @"SimpleTableCell";
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *simpleTableIdentifier = @"SimpleTableCell";
+//    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+//    
+//    if (cell == nil) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+//    }
+//    cell.textLabel.numberOfLines = 0;
+//    cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+//    //formats string for view
+//    
+//    //cell.textLabel.text = materialarray[indexPath.row];
+//    return cell;
+//}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.numberOfLines = 0;
-    cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
-    //formats string for view
     
-    //cell.textLabel.text = materialarray[indexPath.row];
+    cell.textLabel.text = sellers[indexPath.row][0];
+    cell.detailTextLabel.text = sellers[indexPath.row][1];
+    
     return cell;
 }
 
@@ -126,6 +153,47 @@
 //        
 //    }
 //    //rowNo = indexPath.row;
+}
+
+-(void)getfirebase{
+    
+    //firebase data creation
+    //__block NSDictionary * allusers;
+    self.ref = [[FIRDatabase database] reference];
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+        NSDictionary *allusers = snapshot.value;
+        
+        NSDictionary *userdata = nil;
+        NSDictionary *data = nil;
+        for(id key in allusers){
+            if([key isEqual:@"TextSale"]){
+                userdata=allusers[key];
+            }
+        }
+        if(userdata==nil){
+            
+        }
+        else{
+            for(id key in userdata){
+                if([key isEqual:Mtitle]){
+                    data=userdata[key];
+                }
+            }
+            if(data==nil){
+                
+            }
+            else{
+                for(id key in data){
+                    [sellers addObject:data[key]];
+                    [sellersRIN addObject:key];
+                }
+            }
+        }
+        [tableView reloadData];
+
+    }];
+    [tableView reloadData];
+
 }
 
 

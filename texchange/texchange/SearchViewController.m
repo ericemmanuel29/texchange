@@ -7,6 +7,7 @@
 //
 
 #import "SearchViewController.h"
+#import "SellingViewController.h"
 #import "ClassViewController.h"
 #import "MaterialsViewController.h"
 
@@ -394,6 +395,15 @@
     [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:mvc animated:true completion:nil];
     //doesnt search section, only takes from first class it hits
+    }
+    else{
+        SellingViewController *svc = [[SellingViewController alloc] init];
+        svc.camefrom = @"search";
+        NSString *changer = [tablearray[indexPath.row] stringByReplacingOccurrencesOfString:@"/" withString:@"@"];
+        svc.Mtitle=changer;
+        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [self presentViewController:svc animated:true completion:nil];
+
     }
 }
 

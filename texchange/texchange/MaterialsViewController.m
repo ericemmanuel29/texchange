@@ -34,7 +34,8 @@
     scheduleframe.origin.y=60;
     scheduleframe.size.height=scheduleframe.size.height-60;
     //materials
-    materialarray = [material componentsSeparatedByString:@";"];
+    if(material!=nil){
+        materialarray = [material componentsSeparatedByString:@";"];}
     //materials
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:scheduleframe style:UITableViewStylePlain];
@@ -123,11 +124,24 @@
     if([camefrom isEqualToString:@"class"]){
         //go to people selling
         SellingViewController *svc = [[SellingViewController alloc] init];
+        svc.camefrom = @"classmaterials";
+         NSString *changer = [materialarray[indexPath.row] stringByReplacingOccurrencesOfString:@"/" withString:@"@"];
+        svc.Mtitle = changer;
+        svc.classholder=classTitle;
+        svc.materialarray=materialarray;
         [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
         [self presentViewController:svc animated:true completion:nil];
     }
     if([camefrom isEqualToString:@"search"]){
         //go to people selling
+        SellingViewController *svc = [[SellingViewController alloc] init];
+        svc.camefrom = @"searchmaterials";
+        NSString *changer = [materialarray[indexPath.row] stringByReplacingOccurrencesOfString:@"/" withString:@"@"];
+        svc.Mtitle = changer;
+        svc.classholder=classTitle;
+        svc.materialarray=materialarray;
+        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [self presentViewController:svc animated:true completion:nil];
 
     }
     if([camefrom isEqualToString:@"backpack"]){
@@ -136,7 +150,9 @@
         UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             //add textbook to user profile on firebse
             NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
-            [[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:materialarray[indexPath.row]] setValue:@"NO"];
+            NSString *changer = [materialarray[indexPath.row] stringByReplacingOccurrencesOfString:@"/" withString:@"@"];
+
+            [[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:changer] setValue:@"NO"];
              UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Congratulations" message:@"Material was added to your backpack" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             }];

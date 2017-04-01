@@ -8,7 +8,13 @@
 
 @interface SellingViewController : UIViewController
 
-
+@property (nonatomic, retain) NSString *Mtitle;
+@property (nonatomic, retain) NSString *classholder;
+@property (nonatomic, retain) NSString *camefrom;
+@property (nonatomic, retain) NSMutableArray *sellers;
+@property (nonatomic, retain) NSMutableArray *sellersRIN;
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, strong) NSArray *materialarray;
 
 
 @end
