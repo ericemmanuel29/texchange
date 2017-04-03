@@ -18,7 +18,7 @@
 @end
 
 @implementation BackpackViewController
-@synthesize tableView, backpack, textbooks, forsale, RIN;
+@synthesize tableView, backpack, textbooks, forsale, RIN, askingpricetf;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -111,11 +111,37 @@
         cell.contentView.superview.backgroundColor = [UIColor redColor];
         cell.detailTextLabel.text = @"For sale";
     }
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Put this textbook up for sale?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+
+        UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"Enter an asking price" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        [alert2 addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"";
+        }];
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"Asking price %@", [[alert2 textFields][0] text]);
+            //compare the current password and do action here
+            
+        }];
+        
+        
+        [alert2 addAction:confirmAction];
+        [self presentViewController:alert2 animated:YES completion:nil];
+        
+    }];
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    }];
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    [self presentViewController:alert animated:YES completion:nil];
+    
     //rowNo = indexPath.row;
 }
 

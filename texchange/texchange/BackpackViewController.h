@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSArray *textbooks;
 @property (nonatomic, strong) NSArray *forsale;
 @property (nonatomic, strong) NSString *RIN;
+@property (nonatomic, strong) UITextField *askingpricetf;
 
 
 @end
