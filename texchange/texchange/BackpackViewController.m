@@ -105,7 +105,6 @@
     if([forsale[indexPath.row]  isEqual: @"NO"])
     {
         cell.contentView.superview.backgroundColor = [UIColor whiteColor];
-        cell.detailTextLabel.text = @"Not for sale";
     }
     else
     {

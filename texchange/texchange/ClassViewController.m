@@ -238,9 +238,22 @@
     NSString *holder1 = cid;
     NSString *holder2 =[holder1 stringByAppendingString:@" "];
     NSString *holder3 =[holder2 stringByAppendingString:cnum];
-    mvc.classTitle = holder3;
-    [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentViewController:mvc animated:true completion:nil];
+    if (holder3 == nil)
+    {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Sorry, this course is not in our database." message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+        
+        [alert addAction:yesButton];
+        [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+        mvc.classTitle = holder3;
+        [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [self presentViewController:mvc animated:true completion:nil];
+    }
+
     
 }
 
