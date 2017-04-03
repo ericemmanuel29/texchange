@@ -17,6 +17,7 @@
 @implementation LoginViewController
 
 
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     self.ref = [[FIRDatabase database] reference];

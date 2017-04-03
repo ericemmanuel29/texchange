@@ -9,13 +9,16 @@
 #import "BackpackViewController.h"
 #import "ClassViewController.h"
 #import "SearchViewController.h"
-
+#import "LoginViewController.h"
+@import Firebase;
 
 @interface BackpackViewController ()
+- (void) getfirebase;
+@property (strong, nonatomic) FIRDatabaseReference *ref;
 @end
 
 @implementation BackpackViewController
-
+@synthesize tableView, backpack, textbooks, forsale, RIN;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -25,10 +28,11 @@
     CGRect scheduleframe = [[UIScreen mainScreen] bounds];
     scheduleframe.origin.y=65;
     scheduleframe.size.height=scheduleframe.size.height-65;
-    UITableView *tableView = [[UITableView alloc] initWithFrame:scheduleframe style:UITableViewStylePlain];
+    tableView = [[UITableView alloc] initWithFrame:scheduleframe style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     [tableView reloadData];
+    [self getfirebase];
     //red border top and bottom
     CGRect topframe = CGRectMake(0, 0, width, 65);
     UIView *topborder = [[UIView alloc] initWithFrame:topframe];
@@ -49,6 +53,9 @@
     [title setTextColor:[UIColor whiteColor]];
     [title setText:[NSString stringWithFormat:@"My Textbooks"]];
     title.textAlignment = NSTextAlignmentCenter;
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    RIN = [defaults objectForKey:@"RIN"];
 
     [self.view addSubview:tableView];
     [self.view addSubview:topborder];
@@ -73,46 +80,88 @@
     [self presentViewController:svc animated:true completion:nil];  
     
 }
+
 //cell height
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*) indexPath
 {
-    return 100;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;//[classes count];
+    return [backpack count];
+    
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *simpleTableIdentifier = @"SimpleTableCell";
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.numberOfLines = 0;
-    cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
-    //formats string for view
-//    NSString *holder1 = [classes[indexPath.row] stringByAppendingString:@"\n"];
-//    NSString *holder2 =[holder1 stringByAppendingString:classid[indexPath.row]];
-//    NSString *holder3 =[holder2 stringByAppendingString:@" - "];
-//    NSString *holder4 =[holder3 stringByAppendingString:sections[indexPath.row]];
-//    NSString *holder5 =[holder4 stringByAppendingString:@"\n"];
-//    NSString *holder6 =[holder5 stringByAppendingString:instructor[indexPath.row]];
-//    cell.textLabel.text = holder6;
+    NSString *changer = [textbooks[indexPath.row] stringByReplacingOccurrencesOfString:@"@" withString:@"/"];
+    cell.textLabel.text = changer;
+    if([forsale[indexPath.row]  isEqual: @"NO"])
+    {
+        cell.contentView.superview.backgroundColor = [UIColor whiteColor];
+        cell.detailTextLabel.text = @"Not for sale";
+    }
+    else
+    {
+        cell.contentView.superview.backgroundColor = [UIColor redColor];
+        cell.detailTextLabel.text = @"For sale";
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //rowNo = indexPath.row;
+}
+
+-(void)getfirebase{
+    
+    //firebase data creation
+    //__block NSDictionary * allusers;
+    self.ref = [[FIRDatabase database] reference];
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+        NSDictionary *allusers = snapshot.value;
+        
+        NSDictionary *userdata = nil;
+        NSDictionary *thisusersdata = nil;
+        
+        for(id key in allusers){
+            if([key isEqual:@"Users"]){
+                userdata=allusers[key];
+            }
+        }
+        if(userdata==nil){
+            
+        }
+        else{
+            for(id key in userdata)
+            {
+                if([key isEqual:RIN])
+                {
+                    thisusersdata = userdata[key];
+                }
+            }
+            for(id key in thisusersdata)
+            {
+                if([key isEqual:@"Backpack"])
+                {
+                    backpack = thisusersdata[key];
+                }
+            }
+        }
+        textbooks = [NSArray arrayWithArray:[backpack allKeys]];
+        forsale = [NSArray arrayWithArray:[backpack allValues]];
+        [tableView reloadData];
+        
+    }];
+    [tableView reloadData];
+    
 }
 
 
