@@ -124,9 +124,29 @@ int ifcheck=-1;
         name=holder2[1];
         [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('submenulinktext2')[4].click()"];
     }
-    else if([page2 isEqual:@"   View Weekly Schedule"] && ifcheck!=1){
+    else if(([page2 isEqual:@"   View Weekly Schedule"] || [page2 isEqual:@"   View Weekly Schedule Day/Time Grid"]) && ifcheck!=1){
         ifcheck=1;
-        [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('submenulinktext2')[29].click()"];
+        NSString *namecommand = @"document.getElementsByClassName('submenulinktext2').length";
+        NSString *cn = [webview stringByEvaluatingJavaScriptFromString:namecommand];
+        int arraynum = [cn intValue];
+        for (int x=25;x<arraynum; x++){
+            NSString *firstpart = @"document.getElementsByClassName('submenulinktext2')[";
+            NSString *secondpart = @"].outerText";
+            NSString *strtoint = [NSString stringWithFormat:@"%d",x];
+            NSString *fullcommand = [NSString stringWithFormat:@"%@%@%@", firstpart, strtoint, secondpart];
+            NSString *text = [webview stringByEvaluatingJavaScriptFromString:fullcommand];
+            if([text isEqualToString:@"View Weekly Schedule"]){
+                NSString *fp = @"document.getElementsByClassName('submenulinktext2')[";
+                NSString *sp = @"].click()";
+                NSString *sti = [NSString stringWithFormat:@"%d",x];
+                NSString *fc = [NSString stringWithFormat:@"%@%@%@", fp, sti, sp];
+                [webview stringByEvaluatingJavaScriptFromString:fc];
+                x=arraynum;
+            }
+
+        }
+        
+
     }
     else if([page3 isEqual:@"Select a Semester or Summer Session"] && ifcheck!=2){
         ifcheck=2;
