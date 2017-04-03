@@ -101,8 +101,12 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     NSString *changer = [textbooks[indexPath.row] stringByReplacingOccurrencesOfString:@"@" withString:@"/"];
-    NSString *newString = [[changer substringToIndex:30] stringByAppendingString:@"..."];
-    cell.textLabel.text = newString;
+    long len = [changer length];
+    if(len>33){
+        len=33;
+        changer = [[changer substringToIndex:len] stringByAppendingString:@"..."];
+    }
+    cell.textLabel.text = changer;
     if([forsale[indexPath.row][0]  isEqual: @"NO"])
     {
         cell.contentView.superview.backgroundColor = [UIColor whiteColor];
