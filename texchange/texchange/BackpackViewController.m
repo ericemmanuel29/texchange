@@ -147,11 +147,18 @@
                     thisusersdata = userdata[key];
                 }
             }
-            for(id key in thisusersdata)
+            if (thisusersdata == nil)
             {
-                if([key isEqual:@"Backpack"])
+                
+            }
+            else
+            {
+                for(id key in thisusersdata)
                 {
-                    backpack = thisusersdata[key];
+                    if([key isEqual:@"Backpack"])
+                    {
+                        backpack = thisusersdata[key];
+                    }
                 }
             }
         }
