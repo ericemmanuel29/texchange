@@ -151,8 +151,8 @@
             //add textbook to user profile on firebse
             NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
             NSString *changer = [materialarray[indexPath.row] stringByReplacingOccurrencesOfString:@"/" withString:@"@"];
-
-            [[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:changer] setValue:@"NO"];
+            NSArray *holder = @[@"NO", @"0"];
+            [[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:changer] setValue:holder];
              UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Congratulations" message:@"Material was added to your backpack" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             }];
