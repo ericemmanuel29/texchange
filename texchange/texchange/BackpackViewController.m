@@ -18,7 +18,7 @@
 @end
 
 @implementation BackpackViewController
-@synthesize tableView, backpack, textbooks, forsale, RIN, askingpricetf;
+@synthesize tableView, backpack, textbooks, forsale, RIN, askingpricetf, name;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -56,6 +56,8 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     RIN = [defaults objectForKey:@"RIN"];
+    name = [defaults objectForKey:@"name"];
+
 
     [self.view addSubview:tableView];
     [self.view addSubview:topborder];
@@ -110,6 +112,7 @@
     if([forsale[indexPath.row][0]  isEqual: @"NO"])
     {
         cell.contentView.superview.backgroundColor = [UIColor whiteColor];
+        cell.detailTextLabel.text = @"";
     }
     else
     {
@@ -125,30 +128,65 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Put this textbook up for sale?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    if([forsale[indexPath.row][0]  isEqual: @"NO"])
+    {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Put this textbook up for sale?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 
-        UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"Enter an asking price" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        [alert2 addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"";
-        }];
-        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"Asking price %@", [[alert2 textFields][0] text]);
-            //compare the current password and do action here
+            UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"Enter an asking price" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            [alert2 addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                textField.placeholder = @"";
+            }];
+            UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSLog(@"Asking price %@", [[alert2 textFields][0] text]);
+                [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"0"] setValue:@"YES"];
+                [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"1"] setValue:[[alert2 textFields][0] text]];
+                
+                [[[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] child:@"0"] setValue:name];
+                [[[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] child:@"1"] setValue:[[alert2 textFields][0] text]];
+
+                
+                [self getfirebase];
             
+            }];
+        
+        
+            [alert2 addAction:confirmAction];
+            [self presentViewController:alert2 animated:YES completion:nil];
+        
+        }];
+        UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        }];
+    
+    
+        [alert addAction:yesButton];
+        [alert addAction:noButton];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Stop selling this textbook?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            
+            [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"0"] setValue:@"NO"];
+            [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"1"] setValue:@"0"];
+            
+            [[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] setValue:nil] ;
+            
+            [self getfirebase];
+        }];
+        UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         }];
         
         
-        [alert2 addAction:confirmAction];
-        [self presentViewController:alert2 animated:YES completion:nil];
-        
-    }];
-    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-    }];
-    [alert addAction:yesButton];
-    [alert addAction:noButton];
-    [self presentViewController:alert animated:YES completion:nil];
+        [alert addAction:yesButton];
+        [alert addAction:noButton];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+
     
     //rowNo = indexPath.row;
 }
