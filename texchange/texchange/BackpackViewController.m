@@ -101,15 +101,19 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     NSString *changer = [textbooks[indexPath.row] stringByReplacingOccurrencesOfString:@"@" withString:@"/"];
-    cell.textLabel.text = changer;
-    if([forsale[indexPath.row]  isEqual: @"NO"])
+    NSString *newString = [[changer substringToIndex:30] stringByAppendingString:@"..."];
+    cell.textLabel.text = newString;
+    if([forsale[indexPath.row][0]  isEqual: @"NO"])
     {
         cell.contentView.superview.backgroundColor = [UIColor whiteColor];
     }
     else
     {
         cell.contentView.superview.backgroundColor = [UIColor redColor];
-        cell.detailTextLabel.text = @"For sale";
+        NSString *holder1 = @"$";
+        NSString *holder2 =[holder1 stringByAppendingString:forsale[indexPath.row][1]];
+        cell.detailTextLabel.text = holder2;
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
     }
     
     return cell;
