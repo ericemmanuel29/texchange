@@ -10,9 +10,12 @@
 #import "SellingViewController.h"
 #import "ClassViewController.h"
 #import "MaterialsViewController.h"
+@import Firebase;
+
 
 @interface SearchViewController ()
 - (void) updatetableview;
+@property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (nonatomic, retain) UITableView *tableView;
 @end
 
@@ -22,6 +25,7 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    self.ref = [[FIRDatabase database] reference];
     tablearray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor whiteColor];
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
@@ -397,13 +401,39 @@
     //doesnt search section, only takes from first class it hits
     }
     else{
+        if([cameFrom isEqualToString:@"backpack"]){
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Add to Backpack?" message:tablearray[indexPath.row] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                //add textbook to user profile on firebse
+                NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+                NSString *changer = [tablearray[indexPath.row] stringByReplacingOccurrencesOfString:@"/" withString:@"@"];
+                NSArray *holder = @[@"NO", @"0"];
+                [[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:changer] setValue:holder];
+                UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Congratulations" message:@"Material was added to your backpack" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                [alert2 addAction:okayButton];
+                [self presentViewController:alert2 animated:YES completion:nil];
+                
+            }];
+            UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            }];
+            [alert addAction:yesButton];
+            [alert addAction:noButton];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+            
+
+        
+        }
+        else{
         SellingViewController *svc = [[SellingViewController alloc] init];
         svc.camefrom = @"search";
         NSString *changer = [tablearray[indexPath.row] stringByReplacingOccurrencesOfString:@"/" withString:@"@"];
         svc.Mtitle=changer;
         [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
         [self presentViewController:svc animated:true completion:nil];
-
+            }
     }
 }
 
