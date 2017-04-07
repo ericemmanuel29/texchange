@@ -137,26 +137,48 @@
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Put this textbook up for sale?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 
+            
             UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"Enter an asking price" message:@"" preferredStyle:UIAlertControllerStyleAlert];
             [alert2 addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                 textField.placeholder = @"";
             }];
+            
+            
+            
             UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSLog(@"Asking price %@", [[alert2 textFields][0] text]);
-                [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"0"] setValue:@"YES"];
-                [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"1"] setValue:[[alert2 textFields][0] text]];
                 
-                [[[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] child:@"0"] setValue:name];
-                [[[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] child:@"1"] setValue:[[alert2 textFields][0] text]];
+                if (![[alert2 textFields][0]  isEqual: @""])
+                {
+                    UIAlertController * alert3 = [UIAlertController alertControllerWithTitle:@"Please enter a number" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                        
+                        
+                    }];
 
-                
-                [self getfirebase];
-            
+                    
+                    [alert3 addAction:yesButton];
+                    [self presentViewController:alert3 animated:YES completion:nil];
+                    
+                }
+                else
+                {
+                    
+                    [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"0"] setValue:@"YES"];
+                    [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"1"] setValue:[[alert2 textFields][0] text]];
+                    
+                    [[[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] child:@"0"] setValue:name];
+                    [[[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] child:@"1"] setValue:[[alert2 textFields][0] text]];
+                    
+                    
+                    [self getfirebase];
+                }
+
             }];
-        
-        
             [alert2 addAction:confirmAction];
             [self presentViewController:alert2 animated:YES completion:nil];
+        
+
         
         }];
         UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
