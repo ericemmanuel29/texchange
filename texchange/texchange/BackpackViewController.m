@@ -22,6 +22,7 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    self.ref = [[FIRDatabase database] reference];
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     //resizes table view to be used later
@@ -195,7 +196,6 @@
     
     //firebase data creation
     //__block NSDictionary * allusers;
-    self.ref = [[FIRDatabase database] reference];
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
         NSDictionary *allusers = snapshot.value;
         

@@ -8,6 +8,7 @@
 
 #import "ClassViewController.h"
 #import "MaterialsViewController.h"
+#import "MessagesViewController.h"
 #import "BackpackViewController.h"
 #import "SearchViewController.h"
 #import "LoginViewController.h"
@@ -172,6 +173,9 @@
 }
 - (IBAction)message:(UIButton *)sender
 {
+    MessagesViewController *mvc = [[MessagesViewController alloc] init];
+    [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:mvc animated:true completion:nil];
     
 }
 //cell height

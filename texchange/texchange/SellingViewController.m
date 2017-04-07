@@ -25,6 +25,7 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    self.ref = [[FIRDatabase database] reference];
     sellers = [NSMutableArray array];
     sellersRIN = [NSMutableArray array];
     [self getfirebase];
@@ -159,7 +160,6 @@
     
     //firebase data creation
     //__block NSDictionary * allusers;
-    self.ref = [[FIRDatabase database] reference];
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
         NSDictionary *allusers = snapshot.value;
         

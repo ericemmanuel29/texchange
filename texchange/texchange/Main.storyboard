@@ -98,5 +98,23 @@
             </objects>
             <point key="canvasLocation" x="3813.5999999999999" y="93.103448275862078"/>
         </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="XxS-fg-Qlc">
+            <objects>
+                <viewController storyboardIdentifier="ChatViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eL5-Tw-77V" customClass="ChatViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3mt-G9-F7J"/>
+                        <viewControllerLayoutGuide type="bottom" id="avv-dA-e7J"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1TO-eH-ekO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5AE-i6-xGt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4567" y="100"/>
+        </scene>
     </scenes>
 </document>
