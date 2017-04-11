@@ -115,9 +115,25 @@
         cell.contentView.superview.backgroundColor = [UIColor whiteColor];
         cell.detailTextLabel.text = @"";
     }
-    else
+    if([forsale[indexPath.row][0]  isEqual: @"YES"])
     {
         cell.contentView.superview.backgroundColor = [UIColor redColor];
+        NSString *holder1 = @"$";
+        NSString *holder2 =[holder1 stringByAppendingString:forsale[indexPath.row][1]];
+        cell.detailTextLabel.text = holder2;
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
+    }
+    if([forsale[indexPath.row][0]  isEqual: @"NEG"])
+    {
+        cell.contentView.superview.backgroundColor = [UIColor yellowColor];
+        NSString *holder1 = @"$";
+        NSString *holder2 =[holder1 stringByAppendingString:forsale[indexPath.row][1]];
+        cell.detailTextLabel.text = holder2;
+        cell.detailTextLabel.textColor = [UIColor blackColor];
+    }
+    if([forsale[indexPath.row][0]  isEqual: @"SOLD"])
+    {
+        cell.contentView.superview.backgroundColor = [UIColor blackColor];
         NSString *holder1 = @"$";
         NSString *holder2 =[holder1 stringByAppendingString:forsale[indexPath.row][1]];
         cell.detailTextLabel.text = holder2;
@@ -141,6 +157,8 @@
             UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"Enter an asking price" message:@"" preferredStyle:UIAlertControllerStyleAlert];
             [alert2 addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                 textField.placeholder = @"";
+                textField.keyboardType = UIKeyboardTypeNumberPad;
+
             }];
             
             
@@ -148,7 +166,7 @@
             UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSLog(@"Asking price %@", [[alert2 textFields][0] text]);
                 
-                if (![[alert2 textFields][0]  isEqual: @""])
+                if ([[[alert2 textFields][0] text]  isEqual: @""])
                 {
                     UIAlertController * alert3 = [UIAlertController alertControllerWithTitle:@"Please enter a number" message:@"" preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {

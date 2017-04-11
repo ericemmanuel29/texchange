@@ -27,7 +27,7 @@
         }
         else{
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"ChatViewController"];
+            UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"ClassViewController"];
             self.window.rootViewController = viewController;
             [self.window makeKeyAndVisible];
     

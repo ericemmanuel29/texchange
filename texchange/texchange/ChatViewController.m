@@ -7,6 +7,7 @@
 #import "ClassViewController.h"
 #import "SearchViewController.h"
 #import "LoginViewController.h"
+#import "MessagesViewController.h"
 @import Firebase;
 
 @interface ChatViewController ()
@@ -18,7 +19,7 @@
 @end
 
 @implementation ChatViewController
-@synthesize tableView, test, message, messageview, sendbutton;
+@synthesize tableView, test, message, messageview, sendbutton, chatinfo, sellerRIN, txtname;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -99,8 +100,46 @@
 - (IBAction)sendmessage:(UIButton *)sender
 {
     [self.view endEditing:YES];
+    NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+    NSString *name= [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
+    NSMutableArray *newinfo = [NSMutableArray array];
+    if(![message.text isEqual:@""]){
+        if([chatinfo[0] isEqual:@"NEW"]){
+            [newinfo addObject:@"OLD"];
+            [newinfo addObject:chatinfo[1]];
+            [newinfo addObject:chatinfo[2]];
+            [newinfo addObject:@[@[message.text,RIN]]];
+            //buyer
+            [[[[[self.ref child:@"Messages"] child:RIN] child:sellerRIN] child:txtname] setValue:newinfo];
+            //seller
+            if([newinfo[1] isEqual:@"BS"]){
+                newinfo[1]=@"SS";
+            }
+            if([newinfo[1] isEqual:@"BN"]){
+                newinfo[1]=@"SN";
+            }
+            newinfo[2]= name;
+            [[[[[self.ref child:@"Messages"] child:sellerRIN] child:RIN] child:txtname] setValue:newinfo];
+            [chatinfo addObject:@""];
+            message.text=@"";
 
+        }
+        else{
+            newinfo=chatinfo[3];
+            [newinfo addObject:@[message.text,RIN]];
+            [[[[[[self.ref child:@"Messages"] child:RIN] child:sellerRIN] child:txtname] child:@"3"] setValue:newinfo];
+            [[[[[[self.ref child:@"Messages"] child:sellerRIN] child:RIN] child:txtname] child:@"3"] setValue:newinfo];
+
+            message.text=@"";
+
+        }
+        
+        
+        
+    }
     
+    [self getfirebase];
+
 }
 
 
@@ -134,8 +173,10 @@
 
 -(void)goToBottom
 {
+    if(![chatinfo[0] isEqual:@"NEW"]){
     NSIndexPath *lastIndexPath = [self lastIndexPath];
     [self.tableView scrollToRowAtIndexPath:lastIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
 }
 
 -(NSIndexPath *)lastIndexPath
@@ -147,9 +188,9 @@
 
 - (IBAction)back:(UIButton *)sender
 {
-    ClassViewController *cvc = [[ClassViewController alloc] init];
-    [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentViewController:cvc animated:true completion:nil];
+    MessagesViewController *mvc = [[MessagesViewController alloc] init];
+    [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:mvc animated:true completion:nil];
     
 }
 
@@ -170,7 +211,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [test count];
+    if([chatinfo[0] isEqual:@"NEW"]){
+        return 0;
+    }
+    else{
+        return [chatinfo[3] count];
+        
+    }
     
 }
 
@@ -181,9 +228,11 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    if(indexPath.row%2 == 0){
+    //if the other persons message
+    NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+    if(![chatinfo[3][indexPath.row][1] isEqual:RIN]){
         cell.textLabel.font = [UIFont systemFontOfSize:16];
-        cell.textLabel.text = test[indexPath.row];
+        cell.textLabel.text = chatinfo[3][indexPath.row][0];
         cell.detailTextLabel.text = nil;
         cell.textLabel.textColor = [UIColor blackColor];
     
@@ -191,7 +240,7 @@
     else{
         cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
         cell.textLabel.text = nil;
-    cell.detailTextLabel.text = test[indexPath.row];
+    cell.detailTextLabel.text = chatinfo[3][indexPath.row][0];
         cell.detailTextLabel.textColor = [UIColor redColor];
 
     }
@@ -213,50 +262,51 @@
     
     //firebase data creation
     //__block NSDictionary * allusers;
-    //    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
-    //        NSDictionary *allusers = snapshot.value;
-    //
-    //        NSDictionary *userdata = nil;
-    //        NSDictionary *thisusersdata = nil;
-    //
-    //        for(id key in allusers){
-    //            if([key isEqual:@"Users"]){
-    //                userdata=allusers[key];
-    //            }
-    //        }
-    //        if(userdata==nil){
-    //
-    //        }
-    //        else{
-    //            for(id key in userdata)
-    //            {
-    //                if([key isEqual:RIN])
-    //                {
-    //                    thisusersdata = userdata[key];
-    //                }
-    //            }
-    //            if (thisusersdata == nil)
-    //            {
-    //
-    //            }
-    //            else
-    //            {
-    //                for(id key in thisusersdata)
-    //                {
-    //                    if([key isEqual:@"Backpack"])
-    //                    {
-    //                        backpack = thisusersdata[key];
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        textbooks = [NSArray arrayWithArray:[backpack allKeys]];
-    //        forsale = [NSArray arrayWithArray:[backpack allValues]];
-    //        [tableView reloadData];
-    //        
-    //    }];
-    //    [tableView reloadData];
-    //    
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+        NSDictionary *allusers = snapshot.value;
+        NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+        NSDictionary *userdata = nil;
+        NSDictionary *thisusersdata = nil;
+        NSMutableArray *finalarray = nil;
+        for(id key in allusers){
+            if([key isEqual:@"Messages"]){
+                userdata=allusers[key];
+            }
+        }
+        if(userdata==nil){
+            
+        }
+        else{
+            for(id key in userdata)
+            {
+                if([key isEqual:RIN])
+                {
+                    thisusersdata = userdata[key];
+                }
+            }
+            if (thisusersdata == nil)
+            {
+                
+            }
+            else
+            {
+                for(id key in thisusersdata)
+                {
+                    if([key isEqual:txtname]){
+                        if(![thisusersdata[key][0] isEqual:@"NEW"]){
+                            chatinfo=thisusersdata[key];
+                    }
+                    }
+                }
+            }
+        }
+        
+        [tableView reloadData];
+        
+    }];
+    [tableView reloadData];
+    
+   
 }
 
 

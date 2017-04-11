@@ -8,6 +8,7 @@
 
 
 #import "MaterialsViewController.h"
+#import "MessagesViewController.h"
 #import "SearchViewController.h"
 #import "ClassViewController.h"
 #import "SellingViewController.h"
@@ -154,10 +155,68 @@
 //        
 //    }
 //    //rowNo = indexPath.row;
+    NSString *holder1 = @"Buy for $";
+    NSString *price = sellers[indexPath.row][1];
+    NSString *holder2 =[holder1 stringByAppendingString:price];
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Purchasing" message:@"Choose one of the avalible options below" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* yesButton = [UIAlertAction actionWithTitle:holder2 style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        //changing sellers backpack
+        [[[[[self.ref child:@"Users"] child:sellersRIN[indexPath.row]] child:@"Backpack"] child:Mtitle] setValue:@[@"SOLD",price]];
+        [[[[self.ref child:@"TextSale"] child:Mtitle] child:sellersRIN[indexPath.row]] setValue:nil];
+        //add to messages
+        NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+        NSString *name = [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
+        //buyer
+        //bs = buyer sold
+        [[[[[self.ref child:@"Messages"] child:RIN] child:sellersRIN[indexPath.row]] child:Mtitle] setValue:@[@"NEW",@"BS",sellers[indexPath.row][0]]];
+         //seller
+        //ss = seller sold
+         [[[[[self.ref child:@"Messages"] child:sellersRIN[indexPath.row]] child:RIN] child:Mtitle] setValue:@[@"NEW",@"SS", name]];
+        UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Congratulations" message:@"You have made a purchase! Head over to your Messages so you can figure out where to meet up and how to pay" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Go There Now" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            MessagesViewController *mvc = [[MessagesViewController alloc] init];
+            [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+            [self presentViewController:mvc animated:true completion:nil];
+
+        }];
+        [alert2 addAction:okayButton];
+        [self presentViewController:alert2 animated:YES completion:nil];
+
+        
+    }];
+    UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"Negotiate With Seller" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [[[[[self.ref child:@"Users"] child:sellersRIN[indexPath.row]] child:@"Backpack"] child:Mtitle] setValue:@[@"NEG",price]];
+        //add to messages
+        NSString *RIN = [[NSUserDefaults standardUserDefaults] stringForKey:@"RIN"];
+        // bn = buyer negotiation
+        // sn = seller negotiation
+        NSString *name = [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
+        [[[[[self.ref child:@"Messages"] child:RIN] child:sellersRIN[indexPath.row]] child:Mtitle] setValue:@[@"NEW",@"BN",sellers[indexPath.row][0]]];
+        //seller
+        [[[[[self.ref child:@"Messages"] child:sellersRIN[indexPath.row]] child:RIN] child:Mtitle] setValue:@[@"NEW",@"SN", name]];
+        UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Awesome" message:@"You havestarted a negotiation! Head over to your Messages so you can talk about price" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Go There Now" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            MessagesViewController *mvc = [[MessagesViewController alloc] init];
+            [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+            [self presentViewController:mvc animated:true completion:nil];
+            
+        }];
+        [alert2 addAction:okayButton];
+        [self presentViewController:alert2 animated:YES completion:nil];
+        
+    }];
+    UIAlertAction* cancelButton = [UIAlertAction actionWithTitle:@"Cancel Transaction" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    }];
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    [alert addAction:cancelButton];
+    [self presentViewController:alert animated:YES completion:nil];
+
 }
 
 -(void)getfirebase{
-    
+
+
     //firebase data creation
     //__block NSDictionary * allusers;
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
