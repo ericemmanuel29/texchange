@@ -62,6 +62,22 @@
     [self.view addSubview:topborder];
     [self.view addSubview:backbutton];
     [self.view addSubview:title];
+    
+    if([materialarray[0] isEqual:@"NTB"])
+    {
+        [tableView removeFromSuperview];
+        CGRect NTBframe = [[UIScreen mainScreen] bounds];
+        NTBframe.origin.y=65;
+        NTBframe.size.height=NTBframe.size.height-65;
+        UILabel *NTB = [[UILabel alloc] initWithFrame:NTBframe];
+        [NTB setTextColor:[UIColor blackColor]];
+        [NTB setBackgroundColor:[UIColor whiteColor]];
+        NTB.lineBreakMode = NSLineBreakByWordWrapping;
+        NTB.numberOfLines = 0;
+        [NTB setText:[NSString stringWithFormat:@"There are no textbooks for this course."]];
+        NTB.textAlignment = NSTextAlignmentCenter;
+        [self.view addSubview:NTB];
+    }
 
 }
 
