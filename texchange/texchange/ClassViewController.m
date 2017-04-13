@@ -125,7 +125,7 @@
 - (IBAction)backpack:(UIButton *)sender
 {
     BackpackViewController *bvc = [[BackpackViewController alloc] init];
-    [bvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [bvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:bvc animated:true completion:nil];
     
 }
@@ -163,7 +163,7 @@
 {
     SearchViewController *svc = [[SearchViewController alloc] init];
     svc.cameFrom = @"search";
-    [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [svc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:svc animated:true completion:nil];
     
 }
@@ -174,7 +174,7 @@
 - (IBAction)message:(UIButton *)sender
 {
     MessagesViewController *mvc = [[MessagesViewController alloc] init];
-    [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [mvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:mvc animated:true completion:nil];
     
 }
@@ -217,6 +217,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *filepath = [[NSBundle mainBundle] pathForResource:@"TextBookInfo" ofType:@"txt"];
     NSError *error;
     NSString *fileContents = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
@@ -254,7 +255,7 @@
     else
     {
         mvc.classTitle = holder3;
-        [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [mvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:mvc animated:true completion:nil];
     }
 

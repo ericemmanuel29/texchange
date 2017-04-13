@@ -48,7 +48,7 @@
     addbutton.frame = CGRectMake(width-40, 25, 30, 30);
     UIImage *addimage = [UIImage imageNamed:@"plus.png"];
     [addbutton setBackgroundImage:addimage forState:UIControlStateNormal];
-
+    
     CGRect titleframe = CGRectMake(10+27+25, 9, width-10-30-25-10-27-25, 56);
     UILabel *title = [[UILabel alloc] initWithFrame:titleframe];
     [title setTextColor:[UIColor whiteColor]];
@@ -58,8 +58,8 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     RIN = [defaults objectForKey:@"RIN"];
     name = [defaults objectForKey:@"name"];
-
-
+    
+    
     [self.view addSubview:tableView];
     [self.view addSubview:topborder];
     [self.view addSubview:backbutton];
@@ -72,7 +72,7 @@
     ClassViewController *cvc = [[ClassViewController alloc] init];
     [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:cvc animated:true completion:nil];
-
+    
 }
 
 - (IBAction)add:(UIButton *)sender
@@ -80,7 +80,7 @@
     SearchViewController *svc = [[SearchViewController alloc] init];
     svc.cameFrom = @"backpack";
     [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentViewController:svc animated:true completion:nil];  
+    [self presentViewController:svc animated:true completion:nil];
     
 }
 
@@ -133,11 +133,11 @@
     }
     if([forsale[indexPath.row][0]  isEqual: @"SOLD"])
     {
-        cell.contentView.superview.backgroundColor = [UIColor blackColor];
+        cell.contentView.superview.backgroundColor = [UIColor greenColor];
         NSString *holder1 = @"$";
         NSString *holder2 =[holder1 stringByAppendingString:forsale[indexPath.row][1]];
         cell.detailTextLabel.text = holder2;
-        cell.detailTextLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.textColor = [UIColor blackColor];
     }
     
     return cell;
@@ -152,13 +152,13 @@
     {
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Put this textbook up for sale?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-
+            
             
             UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"Enter an asking price" message:@"" preferredStyle:UIAlertControllerStyleAlert];
             [alert2 addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                 textField.placeholder = @"";
                 textField.keyboardType = UIKeyboardTypeNumberPad;
-
+                
             }];
             
             
@@ -173,7 +173,7 @@
                         
                         
                     }];
-
+                    
                     
                     [alert3 addAction:yesButton];
                     [self presentViewController:alert3 animated:YES completion:nil];
@@ -191,43 +191,46 @@
                     
                     [self getfirebase];
                 }
-
+                
             }];
             [alert2 addAction:confirmAction];
             [self presentViewController:alert2 animated:YES completion:nil];
-        
-
-        
+            
+            
+            
         }];
         UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         }];
-    
-    
+        
+        
         [alert addAction:yesButton];
         [alert addAction:noButton];
         [self presentViewController:alert animated:YES completion:nil];
     }
     else
     {
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Stop selling this textbook?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        if(![forsale[indexPath.row][0]  isEqual: @"SOLD"] && ![forsale[indexPath.row][0]  isEqual: @"NEG"]){
             
-            [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"0"] setValue:@"NO"];
-            [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"1"] setValue:@"0"];
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Stop selling this textbook?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                
+                [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"0"] setValue:@"NO"];
+                [[[[[[self.ref child:@"Users"] child:RIN] child:@"Backpack"] child:textbooks[indexPath.row]] child:@"1"] setValue:@"0"];
+                
+                [[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] setValue:nil] ;
+                
+                [self getfirebase];
+            }];
+            UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            }];
             
-            [[[[self.ref child:@"TextSale"] child:textbooks[indexPath.row]] child:RIN] setValue:nil] ;
             
-            [self getfirebase];
-        }];
-        UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        }];
-        
-        
-        [alert addAction:yesButton];
-        [alert addAction:noButton];
-        [self presentViewController:alert animated:YES completion:nil];
+            [alert addAction:yesButton];
+            [alert addAction:noButton];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
     }
-
+    
     
     //rowNo = indexPath.row;
 }

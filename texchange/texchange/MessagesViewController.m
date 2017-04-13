@@ -93,14 +93,13 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    
     if([tablearray[indexPath.row][2] isEqual:@"BS"] || [tablearray[indexPath.row][2] isEqual:@"BN"]){
     cell.textLabel.text = tablearray[indexPath.row][0];
     cell.detailTextLabel.text = tablearray[indexPath.row][1];
     }
     else{
-        cell.textLabel.text = tablearray[indexPath.row][1];
-        cell.detailTextLabel.text = tablearray[indexPath.row][0];
+        cell.textLabel.text = tablearray[indexPath.row][0];
+        cell.detailTextLabel.text = tablearray[indexPath.row][1];
     }
     return cell;
 }
