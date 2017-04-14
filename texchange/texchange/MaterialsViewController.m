@@ -89,17 +89,17 @@
 {
     if([camefrom isEqualToString:@"class"]){
         ClassViewController *cvc = [[ClassViewController alloc] init];
-        [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [cvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:cvc animated:true completion:nil];
     }
     if([camefrom isEqualToString:@"search"]){
         SearchViewController *svc = [[SearchViewController alloc] init];
-        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [svc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:svc animated:true completion:nil];
     }
     if([camefrom isEqualToString:@"backpack"]){
         BackpackViewController *bvc = [[BackpackViewController alloc] init];
-        [bvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [bvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:bvc animated:true completion:nil];
     }
 }
@@ -145,7 +145,7 @@
         svc.Mtitle = changer;
         svc.classholder=classTitle;
         svc.materialarray=materialarray;
-        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [svc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:svc animated:true completion:nil];
     }
     if([camefrom isEqualToString:@"search"]){
@@ -156,7 +156,7 @@
         svc.Mtitle = changer;
         svc.classholder=classTitle;
         svc.materialarray=materialarray;
-        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [svc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:svc animated:true completion:nil];
 
     }

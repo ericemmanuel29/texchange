@@ -18,7 +18,7 @@
 @end
 
 @implementation BackpackViewController
-@synthesize tableView, backpack, textbooks, forsale, RIN, askingpricetf, name;
+@synthesize tableView, backpack, textbooks, forsale, RIN, askingpricetf, name, activityIndicator;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -65,12 +65,15 @@
     [self.view addSubview:backbutton];
     [self.view addSubview:addbutton];
     [self.view addSubview:title];
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(width-80, 25, 30, 30)];
+    [self.view addSubview:activityIndicator];
+    [activityIndicator startAnimating];
 }
 
 - (IBAction)back:(UIButton *)sender
 {
     ClassViewController *cvc = [[ClassViewController alloc] init];
-    [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [cvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:cvc animated:true completion:nil];
     
 }
@@ -79,7 +82,7 @@
 {
     SearchViewController *svc = [[SearchViewController alloc] init];
     svc.cameFrom = @"backpack";
-    [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [svc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:svc animated:true completion:nil];
     
 }
@@ -125,7 +128,7 @@
     }
     if([forsale[indexPath.row][0]  isEqual: @"NEG"])
     {
-        cell.contentView.superview.backgroundColor = [UIColor yellowColor];
+        cell.contentView.superview.backgroundColor = [UIColor orangeColor];
         NSString *holder1 = @"$";
         NSString *holder2 =[holder1 stringByAppendingString:forsale[indexPath.row][1]];
         cell.detailTextLabel.text = holder2;
@@ -139,7 +142,6 @@
         cell.detailTextLabel.text = holder2;
         cell.detailTextLabel.textColor = [UIColor blackColor];
     }
-    
     return cell;
 }
 
@@ -279,7 +281,8 @@
         textbooks = [NSArray arrayWithArray:[backpack allKeys]];
         forsale = [NSArray arrayWithArray:[backpack allValues]];
         [tableView reloadData];
-        
+        [activityIndicator stopAnimating];
+
     }];
     [tableView reloadData];
     

@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSString *RIN;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) UITextField *askingpricetf;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
 
 @end

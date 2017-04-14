@@ -125,7 +125,7 @@
 - (IBAction)backpack:(UIButton *)sender
 {
     BackpackViewController *bvc = [[BackpackViewController alloc] init];
-    [bvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [bvc setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     [self presentViewController:bvc animated:true completion:nil];
     
 }

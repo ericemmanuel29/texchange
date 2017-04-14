@@ -9,6 +9,7 @@
 #import "SearchViewController.h"
 #import "SellingViewController.h"
 #import "ClassViewController.h"
+#import "BackpackViewController.h"
 #import "MaterialsViewController.h"
 @import Firebase;
 
@@ -249,10 +250,16 @@
 
 - (IBAction)back:(UIButton *)sender
 {
-    ClassViewController *cvc = [[ClassViewController alloc] init];
-    [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentViewController:cvc animated:true completion:nil];
-
+    if ([cameFrom isEqual:@"backpack"]){
+    BackpackViewController *bvc = [[BackpackViewController alloc] init];
+    [bvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [self presentViewController:bvc animated:true completion:nil];
+    }
+    else{
+        ClassViewController *cvc = [[ClassViewController alloc] init];
+        [cvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+        [self presentViewController:cvc animated:true completion:nil];
+    }
 }
 
 - (IBAction)classid:(UIButton *)sender
@@ -396,7 +403,7 @@
             
         }
     mvc.classTitle = [NSString stringWithFormat:@"%@ %@", classPrefix, classNumber];
-    [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [mvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:mvc animated:true completion:nil];
     //doesnt search section, only takes from first class it hits
     }
@@ -431,7 +438,7 @@
         svc.camefrom = @"search";
         NSString *changer = [tablearray[indexPath.row] stringByReplacingOccurrencesOfString:@"/" withString:@"@"];
         svc.Mtitle=changer;
-        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [svc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:svc animated:true completion:nil];
             }
     }

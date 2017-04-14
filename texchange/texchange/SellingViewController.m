@@ -77,7 +77,7 @@
         mvc.camefrom = @"class";
         mvc.classTitle = classholder;
         mvc.materialarray=materialarray;
-        [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [mvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:mvc animated:true completion:nil];
     }
     if([camefrom isEqualToString:@"searchmaterials"]){
@@ -85,13 +85,13 @@
         mvc.camefrom = @"search";
         mvc.classTitle = classholder;
         mvc.materialarray=materialarray;
-        [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [mvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:mvc animated:true completion:nil];
     }
     if([camefrom isEqualToString:@"search"]){
         SearchViewController *svc = [[SearchViewController alloc] init];
         svc.cameFrom=@"search";
-        [svc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+        [svc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
         [self presentViewController:svc animated:true completion:nil];
     }
 }
@@ -175,7 +175,7 @@
         UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Congratulations" message:@"You have made a purchase! Head over to your Messages so you can figure out where to meet up and how to pay" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Go There Now" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             MessagesViewController *mvc = [[MessagesViewController alloc] init];
-            [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+            [mvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
             [self presentViewController:mvc animated:true completion:nil];
 
         }];
@@ -194,10 +194,10 @@
         [[[[[self.ref child:@"Messages"] child:RIN] child:sellersRIN[indexPath.row]] child:Mtitle] setValue:@[@"NEW",@"BN",sellers[indexPath.row][0]]];
         //seller
         [[[[[self.ref child:@"Messages"] child:sellersRIN[indexPath.row]] child:RIN] child:Mtitle] setValue:@[@"NEW",@"SN", name]];
-        UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Awesome" message:@"You havestarted a negotiation! Head over to your Messages so you can talk about price" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Awesome" message:@"You have started a negotiation! Head over to your Messages so you can talk about price" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Go There Now" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             MessagesViewController *mvc = [[MessagesViewController alloc] init];
-            [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+            [mvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
             [self presentViewController:mvc animated:true completion:nil];
             
         }];

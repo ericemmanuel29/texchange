@@ -10,5 +10,7 @@
 @property (nonatomic, retain) NSMutableArray *chatinfo;
 @property (nonatomic, retain) NSString *sellerRIN;
 @property (nonatomic, retain) NSString *txtname;
+@property (nonatomic, retain) NSString *negcheck;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
 @end

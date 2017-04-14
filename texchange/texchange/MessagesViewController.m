@@ -18,7 +18,7 @@
 @end
 
 @implementation MessagesViewController
-@synthesize tableView, MUsers, MUserstexts, tablearray, userarrays;
+@synthesize tableView, MUsers, MUserstexts, tablearray, userarrays, activityIndicator;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -57,18 +57,24 @@
     
     // NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     //RIN = [defaults objectForKey:@"RIN"];
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(width-40, 25, 30, 30)];
+    [self.view addSubview:activityIndicator];
+    [activityIndicator startAnimating];
+
     
     
     [self.view addSubview:tableView];
     [self.view addSubview:topborder];
     [self.view addSubview:backbutton];
     [self.view addSubview:title];
+    [self.view addSubview:activityIndicator];
+
 }
 
 - (IBAction)back:(UIButton *)sender
 {
     ClassViewController *cvc = [[ClassViewController alloc] init];
-    [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [cvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:cvc animated:true completion:nil];
     
 }
@@ -94,12 +100,12 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     if([tablearray[indexPath.row][2] isEqual:@"BS"] || [tablearray[indexPath.row][2] isEqual:@"BN"]){
-    cell.textLabel.text = tablearray[indexPath.row][0];
-    cell.detailTextLabel.text = tablearray[indexPath.row][1];
+        cell.textLabel.text = tablearray[indexPath.row][0];
+        cell.detailTextLabel.text = [tablearray[indexPath.row][1] stringByReplacingOccurrencesOfString:@"@" withString:@"/"];
     }
     else{
         cell.textLabel.text = tablearray[indexPath.row][0];
-        cell.detailTextLabel.text = tablearray[indexPath.row][1];
+        cell.detailTextLabel.text = [tablearray[indexPath.row][1] stringByReplacingOccurrencesOfString:@"@" withString:@"/"];
     }
     return cell;
 }
@@ -109,10 +115,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ChatViewController *cvc = [[ChatViewController alloc] init];
     cvc.chatinfo = userarrays[indexPath.row];
-    cvc.sellerRIN = MUsers[indexPath.row];
+    cvc.sellerRIN = tablearray[indexPath.row][3];
     cvc.txtname = tablearray[indexPath.row][1];
     
-    [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [cvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:cvc animated:true completion:nil];
 
     //rowNo = indexPath.row;
@@ -161,17 +167,17 @@
         
         for(int x=0;x<[MUsers count];x++){
             for(id key in MUserstexts[x]){
-                //tablearray format [name, textbook, type of transaction]
-                [tablearray addObject:@[MUserstexts[x][key][2],key,MUserstexts[x][key][1]]];
+                //tablearray format [name, textbook, type of transaction, rin]
+                [tablearray addObject:@[MUserstexts[x][key][2],key,MUserstexts[x][key][1], MUsers[x]]];
                 [userarrays addObject:MUserstexts[x][key]];
 
             }
         }
         [tableView reloadData];
-        
+        [activityIndicator stopAnimating];
     }];
     [tableView reloadData];
-    
+
 }
 
 @end

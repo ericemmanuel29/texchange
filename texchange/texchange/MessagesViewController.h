@@ -8,6 +8,7 @@
 @property (nonatomic, retain) NSMutableArray *MUserstexts;
 @property (nonatomic, retain) NSMutableArray *tablearray;
 @property (nonatomic, retain) NSMutableArray *userarrays;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
 
 @end
