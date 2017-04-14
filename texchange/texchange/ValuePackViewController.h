@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSMutableDictionary *classMaterialsFinal;
 @property (nonatomic, strong) NSArray *classid;
 @property (nonatomic, strong) NSArray *classes;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
 @end
 

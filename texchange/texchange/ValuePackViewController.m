@@ -24,7 +24,7 @@
 
 @implementation ValuePackViewController
 
-@synthesize material, materialarray, camefrom, classTitle, tableView, classMaterials, classid, classes, classMaterialsFinal;
+@synthesize material, materialarray, camefrom, classTitle, tableView, classMaterials, classid, classes, classMaterialsFinal, activityIndicator;
 
 
 -(void)viewDidLoad{
@@ -57,7 +57,7 @@
     UIButton *addbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     [addbutton addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
     addbutton.frame = CGRectMake(width-40, 25, 30, 30);
-    UIImage *addimage = [UIImage imageNamed:@"plus.png"];
+    UIImage *addimage = [UIImage imageNamed:@"cart.png"];
     [addbutton setBackgroundImage:addimage forState:UIControlStateNormal];
 
     
@@ -108,13 +108,17 @@
         
     }
 
-    
+  
+
     
     [self.view addSubview:topborder];
     [self.view addSubview:backbutton];
     [self.view addSubview:addbutton];
     [self.view addSubview:title];
-
+    
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(width-80, 25, 30, 30)];
+    [self.view addSubview:activityIndicator];
+    [activityIndicator startAnimating];
     
 }
 
@@ -130,7 +134,7 @@
         }
     }
     
-    NSString *messageString = [NSString stringWithFormat:@"Do you want to spend $%d?", boo];
+    NSString *messageString = [NSString stringWithFormat:@"Package your textbooks for $%d?", boo];
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:messageString message:@"" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         
@@ -161,7 +165,7 @@
                 UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Congratulations" message:@"You have made a purchase! Head over to your Messages so you can figure out where to meet up and how to pay" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Go There Now" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     MessagesViewController *mvc = [[MessagesViewController alloc] init];
-                    [mvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+                    [mvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
                     [self presentViewController:mvc animated:true completion:nil];
                     
                 }];
@@ -186,7 +190,7 @@
 {
     
     ClassViewController *cvc = [[ClassViewController alloc] init];
-    [cvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [cvc setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self presentViewController:cvc animated:true completion:nil];
     
     
@@ -319,7 +323,7 @@
                 }
             }
         }
-
+        [activityIndicator stopAnimating];
         [tableView reloadData];
         
     }];

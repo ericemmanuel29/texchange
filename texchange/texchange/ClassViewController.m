@@ -171,7 +171,7 @@
 - (IBAction)package:(UIButton *)sender
 {
     ValuePackViewController *vpvc = [[ValuePackViewController alloc] init];
-    [vpvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [vpvc setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     [self presentViewController:vpvc animated:true completion:nil];
 }
 - (IBAction)message:(UIButton *)sender
