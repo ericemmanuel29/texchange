@@ -240,12 +240,18 @@
 
         }
         else{
-        cell.textLabel.text = p1[0];
+            cell.textLabel.text = p1[0];
         }
     }
     else{
-        
-        cell.textLabel.text = animal;
+        NSString *changer = [animal stringByReplacingOccurrencesOfString:@"@" withString:@"/"];
+        long len = [changer length];
+        if(len>33){
+            len=33;
+            changer = [[changer substringToIndex:len] stringByAppendingString:@"..."];
+        }
+        cell.textLabel.text = changer;
+        //cell.textLabel.text = animal;
     }
     if([p1 count]==3){
         cell.detailTextLabel.text = p1[2];
