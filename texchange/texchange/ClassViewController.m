@@ -12,6 +12,7 @@
 #import "BackpackViewController.h"
 #import "SearchViewController.h"
 #import "LoginViewController.h"
+#import "ValuePackViewController.h"
 @import Firebase;
 
 @interface ClassViewController ()
@@ -169,7 +170,9 @@
 }
 - (IBAction)package:(UIButton *)sender
 {
-    
+    ValuePackViewController *vpvc = [[ValuePackViewController alloc] init];
+    [vpvc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentViewController:vpvc animated:true completion:nil];
 }
 - (IBAction)message:(UIButton *)sender
 {

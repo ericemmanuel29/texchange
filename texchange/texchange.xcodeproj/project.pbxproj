@@ -10,6 +10,7 @@
 		2EB4BE0F2E9C43539B942E87 /* libPods-texchangeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3F62C567545B39F072B3F73 /* libPods-texchangeTests.a */; };
 		5595F1EEA46BF876CE0AB44F /* libPods-texchangeUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35090CEA87624D2F291D9062 /* libPods-texchangeUITests.a */; };
 		7930B186DDC71602109F7F70 /* libPods-texchange.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1202C2EBCBE76B1E2E681E2 /* libPods-texchange.a */; };
+		AA1378AC1E9EEBAB000B51F0 /* ValuePackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1378AB1E9EEBAB000B51F0 /* ValuePackViewController.m */; };
 		AA5DBC641E81CC7600A10DD6 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5DBC631E81CC7600A10DD6 /* SearchViewController.m */; };
 		AA887E311E86C25E000D16F2 /* TextBookInfoMaterials.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA887E301E86C25E000D16F2 /* TextBookInfoMaterials.txt */; };
 		AAD498051E8AAAC100847808 /* TextBookInfo.txt in Resources */ = {isa = PBXBuildFile; fileRef = AAD498041E8AAAC100847808 /* TextBookInfo.txt */; };
@@ -55,6 +56,8 @@
 		64FE5F494497B3EAC51C64FD /* Pods-texchangeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-texchangeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-texchangeUITests/Pods-texchangeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6E45E42E89D588C12C2FB958 /* Pods-texchange.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-texchange.release.xcconfig"; path = "Pods/Target Support Files/Pods-texchange/Pods-texchange.release.xcconfig"; sourceTree = "<group>"; };
 		956551DBA2EAAFFB50EB0667 /* Pods-texchangeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-texchangeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-texchangeTests/Pods-texchangeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AA1378AA1E9EEBAB000B51F0 /* ValuePackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValuePackViewController.h; sourceTree = "<group>"; };
+		AA1378AB1E9EEBAB000B51F0 /* ValuePackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValuePackViewController.m; sourceTree = "<group>"; };
 		AA5DBC621E81CC7600A10DD6 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		AA5DBC631E81CC7600A10DD6 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		AA887E301E86C25E000D16F2 /* TextBookInfoMaterials.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextBookInfoMaterials.txt; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 				BC6762EE1E54E83C004C0A95 /* LoginViewController.m */,
 				AA5DBC621E81CC7600A10DD6 /* SearchViewController.h */,
 				AA5DBC631E81CC7600A10DD6 /* SearchViewController.m */,
+				AA1378AA1E9EEBAB000B51F0 /* ValuePackViewController.h */,
+				AA1378AB1E9EEBAB000B51F0 /* ValuePackViewController.m */,
 				BC03EB891E734052007AF9AA /* Main.storyboard */,
 				BC6762C01E4BB1A7004C0A95 /* Assets.xcassets */,
 				BC6762C21E4BB1A7004C0A95 /* LaunchScreen.storyboard */,
@@ -524,6 +529,7 @@
 				BCBE35C31E8ABB15001F3205 /* MaterialsViewController.m in Sources */,
 				BC6762EC1E54E82B004C0A95 /* ClassViewController.m in Sources */,
 				AA5DBC641E81CC7600A10DD6 /* SearchViewController.m in Sources */,
+				AA1378AC1E9EEBAB000B51F0 /* ValuePackViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
